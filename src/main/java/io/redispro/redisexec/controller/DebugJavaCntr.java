@@ -4,6 +4,7 @@ import io.redispro.redisexec.dto.BackEndRsp;
 import io.redispro.redisexec.dto.RsocSvcResult;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Callable;
 
-
+@Slf4j
 @RestController
-//@RequiredArgsConstructor
 @RequestMapping(value = "/debug/java", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class DebugJavaCntr {
 
