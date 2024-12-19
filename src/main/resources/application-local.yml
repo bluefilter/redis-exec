@@ -1,0 +1,14 @@
+spring:
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+#logging:
+#  config: classpath:log4j2-spring-local.yml
+#  level:
+#    root: info
+#    feign: debug
+#    com.twolinecode.com: debug
+
+

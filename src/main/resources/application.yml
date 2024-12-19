@@ -1,0 +1,15 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 10MB
+  jmx:
+    enabled: true
+
+server:
+  port: 8000
+
+#logging:
+#  config: classpath:log4j2-spring.yml
+#  level:
+#    org.springframework.web.servlet.PageNotFound: 'OFF'
