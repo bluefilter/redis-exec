@@ -3,16 +3,13 @@ spring:
     multipart:
       max-file-size: 1MB
       max-request-size: 10MB
-  jmx:
-    enabled: true
+#  jmx:
+#    enabled: true
 
 server:
   port: 8000
 
 logging:
   level:
-    root: info
-#logging:
-#  config: classpath:log4j2-spring.yml
-#  level:
-#    org.springframework.web.servlet.PageNotFound: 'OFF'
+    #root: info # INFO 레벨 이상의 메시지만 출력하도록 설정합니다.   INFO, WARN, ERROR 레벨의 로그 메시지가 출력됩니다.  DEBUG, TRACE 레벨의 메시지는 무시됩니다.
+    root: info #off error warn info debug trace

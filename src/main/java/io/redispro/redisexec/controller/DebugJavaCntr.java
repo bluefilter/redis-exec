@@ -3,8 +3,9 @@ package io.redispro.redisexec.controller;
 import io.redispro.redisexec.dto.BackEndRsp;
 import io.redispro.redisexec.dto.RsocSvcResult;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,14 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Callable;
 
-@Slf4j
+
 @RestController
 @RequestMapping(value = "/debug/java", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class DebugJavaCntr {
 
-    // Environment 필드 선언, @RequiredArgsConstructor가 생성자에서 자동으로 주입
+    private static final Logger log = LoggerFactory.getLogger(DebugJavaCntr.class);
+
+    // Environment 필드 선언, @RequiredArgsConstructor 가 생성자에서 자동으로 주입
     private final Environment environment;
 
     // 생성자 주입
@@ -29,11 +32,8 @@ public class DebugJavaCntr {
         this.environment = environment;
     }
 
-    //    @Value("${spring.application.desc}")
-//    private String appDesc;
-//
-//    @Value("${api.version}")
-//    String apiVer;
+    @Value("${server.port}")
+    String serverPort;
 
     String getLocalDateTimeNow() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HH:mm:ss"));
@@ -44,14 +44,21 @@ public class DebugJavaCntr {
         return zone.toString();
     }
 
-    @GetMapping(value = "/get-hello")
+    @GetMapping(value = "/get-info")
     public Callable<?> getInfo() {
+        log.info("get-info");
+
         RsocSvcResult result = new RsocSvcResult();
         try {
             result.put("activeProfile", environment.getActiveProfiles()[0]);
-//            result.put("appDesc", appDesc);
-//            result.put("apiVer", apiVer);
-            result.put("port", environment.getProperty("server.port"));
+
+            // 아래 두 가지 방식으로 값을 가져올 수 있다.
+            //result.put("port", environment.getProperty("server.port"));
+            result.put("server port", serverPort);
+
+            result.put("redis host", environment.getProperty("spring.data.redis.host"));
+            result.put("redis port", environment.getProperty("spring.data.redis.port"));
+
             result.put("zoneId", getZoneId());
             result.put("localDateTimeNow", getLocalDateTimeNow());
         } catch (Exception ex) {
