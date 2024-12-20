@@ -4,6 +4,7 @@ import io.redispro.redisexec.dto.BackEndRsp;
 import io.redispro.redisexec.dto.RsocSvcResult;
 import io.redispro.redisexec.dto.MyObject;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +17,21 @@ import java.util.concurrent.Callable;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/debug/redis", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class DebugRedisCntr {
+@RequestMapping(value = "/redis/jedis", produces = {MediaType.APPLICATION_JSON_VALUE})
+public class JedisCntr {
 
     private final Jedis jedis;
 
+    @Value("${spring.data.redis.host}")
+    private String host;
+
+    @Value("${spring.data.redis.port}")
+    private String port;
+
     // 기본 생성자에서 jedis 초기화
-    public DebugRedisCntr() {
+    public JedisCntr() {
         // Redis 서버의 호스트와 포트를 지정하여 초기화
-        this.jedis = new Jedis("localhost", 6379); // 예시: localhost와 6379 포트로 Redis 연결
+        this.jedis = new Jedis("", 6379); // 예시: localhost와 6379 포트로 Redis 연결
     }
 
     @GetMapping(value = "/get-value")

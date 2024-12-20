@@ -19,16 +19,16 @@ import java.util.concurrent.Callable;
 
 
 @RestController
-@RequestMapping(value = "/debug/java", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class DebugJavaCntr {
+@RequestMapping(value = "/server/info", produces = {MediaType.APPLICATION_JSON_VALUE})
+public class ServerCntr {
 
-    private static final Logger log = LoggerFactory.getLogger(DebugJavaCntr.class);
+    private static final Logger log = LoggerFactory.getLogger(ServerCntr.class);
 
     // Environment 필드 선언, @RequiredArgsConstructor 가 생성자에서 자동으로 주입
     private final Environment environment;
 
     // 생성자 주입
-    public DebugJavaCntr(Environment environment) {
+    public ServerCntr(Environment environment) {
         this.environment = environment;
     }
 
@@ -44,9 +44,9 @@ public class DebugJavaCntr {
         return zone.toString();
     }
 
-    @GetMapping(value = "/get-info")
+    @GetMapping(value = "")
     public Callable<?> getInfo() {
-        log.info("get-info");
+        log.info("get");
 
         RsocSvcResult result = new RsocSvcResult();
         try {
