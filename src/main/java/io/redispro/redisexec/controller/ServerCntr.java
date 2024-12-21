@@ -1,8 +1,8 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.BackEndRsp;
-import io.redispro.redisexec.dto.RsocSvcResult;
+import io.redispro.redisexec.dto.ResponseDto;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +19,7 @@ import java.util.concurrent.Callable;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/server/info", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class ServerCntr {
 
@@ -26,11 +27,6 @@ public class ServerCntr {
 
     // Environment 필드 선언, @RequiredArgsConstructor 가 생성자에서 자동으로 주입
     private final Environment environment;
-
-    // 생성자 주입
-    public ServerCntr(Environment environment) {
-        this.environment = environment;
-    }
 
     @Value("${server.port}")
     String serverPort;
@@ -48,24 +44,24 @@ public class ServerCntr {
     public Callable<?> getInfo() {
         log.info("get");
 
-        RsocSvcResult result = new RsocSvcResult();
+        ResponseDto result = new ResponseDto();
         try {
-            result.put("activeProfile", environment.getActiveProfiles()[0]);
+            result.addData("activeProfile", environment.getActiveProfiles()[0]);
 
             // 아래 두 가지 방식으로 값을 가져올 수 있다.
             //result.put("port", environment.getProperty("server.port"));
-            result.put("server port", serverPort);
+            result.addData("server port", serverPort);
 
-            result.put("redis host", environment.getProperty("spring.data.redis.host"));
-            result.put("redis port", environment.getProperty("spring.data.redis.port"));
-
-            result.put("zoneId", getZoneId());
-            result.put("localDateTimeNow", getLocalDateTimeNow());
-        } catch (Exception ex) {
-            result.put("msg", ex.getMessage());
+            result.addData("redis host", environment.getProperty("spring.data.redis.host"));
+            result.addData("redis port", environment.getProperty("spring.data.redis.port"));
+            result.addData("zoneId", getZoneId());
+            result.addData("localDateTimeNow", getLocalDateTimeNow());
+        } catch (Exception e) {
+            result.setStatus("error");
+            result.setMessage(e.getMessage());
         }
 
-        return () -> BackEndRsp.of(result.getResultData());
+        return () -> result;
     }
 
 }
