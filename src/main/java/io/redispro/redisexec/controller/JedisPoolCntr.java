@@ -27,20 +27,19 @@ public class JedisPoolCntr {
     private final JedisPool jedisPool;
 
     @GetMapping("/get-value")
-    public Callable<?> getRedisValue(RedisQryDto qryDto) {
+    public Callable<?> getRedisValue(@RequestParam("dataType") String dataType, @RequestParam("key") String key) {
         // 응답 결과 객체
         ResponseDto result = new ResponseDto();
 
         // Jedis 객체를 풀에서 빌려오기
         try (Jedis jedis = jedisPool.getResource()) {
-            String key = qryDto.getKey();
 
             // key 의 타입 조회
             String keyType = jedis.type(key);
-            RedisDataType dataType;
+            RedisDataType redisDataType;
 
             try {
-                dataType = RedisDataType.fromTypeName(keyType);
+                redisDataType = RedisDataType.fromTypeName(dataType);
             } catch (IllegalArgumentException e) {
                 result.setStatus("error");
                 result.setMessage("Unsupported or unknown key type: " + keyType);
@@ -52,13 +51,12 @@ public class JedisPoolCntr {
             result.addData("key", key);
 
             // 데이터 타입에 따라 처리
-            switch (dataType) {
+            switch (redisDataType) {
                 case STRING:
-                    result.addData("value", jedis.get(key));
+                    result.addData("value", getString(key));
                     break;
                 case LIST:
-                    List<String> listValues = jedis.lrange(key, 0, -1);
-                    result.addData("value", listValues);
+                    result.addData("value", getList(key));
                     break;
                 case SET:
                     Set<String> setValues = jedis.smembers(key);
@@ -106,13 +104,17 @@ public class JedisPoolCntr {
                     }
                     result.addData("value", streamValues);
                     break;
+                case HYPERLOGLOG:
+                    // PFCOUNT 명령어로 HyperLogLog의 고유 요소 개수 추정
+                    result.addData("value", jedis.pfcount(key));
+                    break;
                 case NONE:
                     result.setStatus("error");
                     result.setMessage("Key does not exist.");
                     break;
                 default:
                     result.setStatus("error");
-                    result.setMessage("Unsupported or unknown key type: " + dataType.getTypeName());
+                    result.setMessage("Unsupported or unknown key type: " + redisDataType.getTypeName());
                     return () -> result;
             }
         } catch (Exception e) {
@@ -134,21 +136,22 @@ public class JedisPoolCntr {
             String value = dataDto.getValue(); // Redis에 설정할 값
             String dataType = dataDto.getDataType(); // 데이터 타입 (string, list, set, zset, hash, stream 등)
 
+            result.addData("dataType", dataType);
+            result.addData("key", key);
+
             // 데이터 타입에 따른 처리
-            switch (dataType.toLowerCase()) {
-                case "string":
-                    jedis.set(key, value); // String 값 설정
-                    result.addData("value", value);
+            switch (RedisDataType.fromTypeName(dataType)) {
+                case STRING:
+                    addString(dataDto, result);
                     break;
-                case "list":
-                    jedis.lpush(key, value); // List의 맨 앞에 값 추가
-                    result.addData("value", value);
+                case LIST:
+                    addList(dataDto, result);
                     break;
-                case "set":
+                case SET:
                     jedis.sadd(key, value); // Set에 값 추가
                     result.addData("value", value);
                     break;
-                case "zset":
+                case ZSET:
                     if (dataDto.getScore() != null) {
                         double score = dataDto.getScore(); // ZSet에서 점수를 받을 경우
                         jedis.zadd(key, score, value); // ZSet에 점수와 함께 값 추가
@@ -160,7 +163,7 @@ public class JedisPoolCntr {
                         return () -> result;
                     }
                     break;
-                case "hash":
+                case HASH:
                     if (dataDto.getField() != null) {
                         String field = dataDto.getField(); // 해시의 필드
                         jedis.hset(key, field, value); // Hash에 필드와 값을 설정
@@ -172,7 +175,7 @@ public class JedisPoolCntr {
                         return () -> result;
                     }
                     break;
-                case "stream":
+                case STREAM:
                     if (dataDto.getStreamField() != null) {
                         Map<String, String> streamData = new HashMap<>();
                         streamData.put(dataDto.getStreamField(), value); // Stream의 필드와 값 설정
@@ -187,7 +190,18 @@ public class JedisPoolCntr {
                         return () -> result;
                     }
                     break;
-                case "geo":
+                case HYPERLOGLOG:
+                    if (value != null) {
+                        Long added = jedis.pfadd(key, value); // HyperLogLog에 값 추가
+                        result.addData("value", value);
+                        result.addData("added", added);
+                    } else {
+                        result.setStatus("error");
+                        result.setMessage("Value must be provided for HYPERLOGLOG.");
+                        return () -> result;
+                    }
+                    break;
+                case GEO:
                     // GEO 데이터 타입 처리
                     if (dataDto.getGeoData() != null && !dataDto.getGeoData().isEmpty()) {
                         // GeoData 리스트를 순회하면서 GEO 데이터 추가
@@ -220,6 +234,101 @@ public class JedisPoolCntr {
         }
 
         return () -> result;
+    }
+
+    @DeleteMapping("/delete-keys")
+    public Callable<?> deleteRedisKeys(@RequestParam List<String> keys) {
+        ResponseDto result = new ResponseDto();
+
+        try (Jedis jedis = jedisPool.getResource()) {
+            List<String> nonExistentKeys = new ArrayList<>();
+            long totalDeletedCount = 0;
+
+            // 가변인자로 삭제 가능
+            // jedis.del(keys.toArray(new String[0])); // List로 전달된 키들을 배열로 변환하여 삭제
+
+            for (String key : keys) {
+                if (jedis.exists(key)) {
+                    totalDeletedCount += jedis.del(key);
+                } else {
+                    nonExistentKeys.add(key);
+                }
+            }
+
+            result.setStatus("success");
+            result.setMessage("Keys processed successfully.");
+            result.addData("totalDeletedCount", totalDeletedCount);
+            result.addData("nonExistentKeys", nonExistentKeys);
+        } catch (Exception e) {
+            result.setStatus("error");
+            result.setMessage(e.getMessage());
+        }
+
+        return () -> result;
+    }
+
+    String getString(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.get(key);
+        }
+    }
+
+    List<String> getList(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.lrange(key, 0, -1);
+        }
+    }
+
+    void addString(RedisDataDto dataDto, ResponseDto result) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = dataDto.getKey();
+            String value = dataDto.getValue(); // Redis에 설정할 값
+
+            jedis.set(key, value); // String 값 설정
+            result.addData("value", value);
+        } catch (Exception e) {
+            result.setStatus("error");
+            result.setMessage(e.getMessage());
+        }
+    }
+
+    /*
+    Redis List의 특징
+        값은 문자열로 저장됩니다.
+        리스트의 각 요소는 입력된 순서대로 정렬됩니다(삽입 순서를 유지).
+        리스트는 최대 약 2^32 - 1 (약 40억 개)의 항목을 저장할 수 있습니다.
+    */
+    void addList(RedisDataDto dataDto, ResponseDto result) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = dataDto.getKey();
+
+            result.addData("value", dataDto.getValues());
+
+            if (dataDto.isBListLR())
+                jedis.lpush(key, dataDto.getValues().toArray(new String[0])); // 맨 앞에 값 추가
+            else
+                jedis.rpush(key, dataDto.getValues().toArray(new String[0])); // 맨 뒤에 추가
+
+            result.addData("lastest", getList(key));
+        }
+    }
+
+    void initList(RedisDataDto dataDto, ResponseDto result) {
+        // Jedis 객체를 사용하여 Redis 연결
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = "data:list:1";  // 기존 리스트 키
+
+            // 두 가지 방법이 가능
+            // 기존 리스트 삭제
+            // jedis.del(key);
+
+            // 리스트의 값을 비우기 (LTRIM을 이용하여 0에서 0까지 자르기)
+            jedis.ltrim(key, 0, 0);
+
+            // 새 데이터 추가 (RPUSH로 리스트의 뒤에 추가)
+            jedis.rpush(key, dataDto.getValues().toArray(new String[0])); // 맨 뒤에 추가
+        }
+
     }
 
 }

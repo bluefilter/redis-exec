@@ -10,6 +10,7 @@ public class RedisDataDto {
 
     private String key;            // Redis에서 사용할 키
     private String value;          // Redis에 설정할 값
+    private List<String> values; // Redis에 설정할 값들
     private String dataType;       // 데이터 타입 (string, list, set, zset, hash, stream 등)
     private Double score;          // zset의 경우 점수 (Double로 변경)
     private String field;          // hash의 경우 필드
@@ -17,6 +18,8 @@ public class RedisDataDto {
     private Double latitude;       // geo 데이터의 위도
     private Double longitude;      // geo 데이터의 경도
     private List<GeoData> geoData; // Geo 데이터 리스트 (Geo 추가)
+
+    private boolean bListLR;    // list 삽입방향, l = true r = false
 
     // 기본 생성자 (자동 생성)
 

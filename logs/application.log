@@ -2200,3 +2200,354 @@ Caused by: javax.management.InstanceAlreadyExistsException: MXBean already regis
 2024-12-21 14:44:25 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 2024-12-21 14:44:25 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
 2024-12-21 14:44:25 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.128 seconds (process running for 1.907)
+2024-12-21 16:42:02 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-21 16:42:02 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-21 16:42:05 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-21 16:42:05 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 10877 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-21 16:42:05 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-21 16:42:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-21 16:42:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-21 16:42:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2024-12-21 16:42:05 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-21 16:42:05 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-21 16:42:05 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-21 16:42:05 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-21 16:42:05 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-21 16:42:05 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 531 ms
+2024-12-21 16:42:06 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-21 16:42:06 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-21 16:42:06 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.141 seconds (process running for 1.761)
+2024-12-21 16:42:43 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-21 16:42:43 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-21 16:42:43 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-21 16:43:39 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-21 16:43:39 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-21 16:43:41 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-21 16:43:41 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 10927 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-21 16:43:41 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-21 16:43:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-21 16:43:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-21 16:43:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2024-12-21 16:43:42 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-21 16:43:42 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-21 16:43:42 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-21 16:43:42 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-21 16:43:42 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-21 16:43:42 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 480 ms
+2024-12-21 16:43:42 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-21 16:43:42 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-21 16:43:42 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.054 seconds (process running for 1.669)
+2024-12-21 16:43:48 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-21 16:43:48 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-21 16:43:48 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-12-21 16:43:54 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-21 16:43:54 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-21 16:43:56 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-21 16:43:56 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 10943 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-21 16:43:56 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-21 16:43:56 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-21 16:43:56 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-21 16:43:56 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-21 16:43:57 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-21 16:43:57 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-21 16:43:57 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-21 16:43:57 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-21 16:43:57 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-21 16:43:57 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 477 ms
+2024-12-21 16:43:57 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-21 16:43:57 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-21 16:43:57 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.047 seconds (process running for 1.823)
+2024-12-21 16:44:05 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-21 16:44:05 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-21 16:44:05 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-12-21 22:49:20 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-21 22:49:20 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 09:22:39 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 09:22:39 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 2604 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 09:22:39 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 09:22:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 09:22:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 09:22:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 09:22:39 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 09:22:39 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:22:39 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 09:22:39 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 09:22:39 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 09:22:39 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 577 ms
+2024-12-22 09:22:40 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:22:40 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 09:22:40 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.184 seconds (process running for 1.909)
+2024-12-22 09:22:44 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 09:22:44 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 09:22:44 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 09:40:54 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 09:40:54 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 09:40:56 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 09:40:57 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 3038 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 09:40:57 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 09:40:57 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 09:40:57 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 09:40:57 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 09:40:57 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 09:40:57 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:40:57 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 09:40:57 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 09:40:57 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 09:40:57 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 472 ms
+2024-12-22 09:40:58 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:40:58 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 09:40:58 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.05 seconds (process running for 1.656)
+2024-12-22 09:41:59 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 09:41:59 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 09:41:59 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 09:43:34 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 09:43:34 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 09:43:37 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 09:43:37 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 3112 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 09:43:37 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 09:43:37 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 09:43:37 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 09:43:37 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 09:43:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 09:43:38 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:43:38 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 09:43:38 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 09:43:38 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 09:43:38 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 469 ms
+2024-12-22 09:43:38 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:43:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 09:43:38 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.034 seconds (process running for 1.73)
+2024-12-22 09:44:05 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 09:44:05 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 09:44:05 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 09:53:39 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 09:53:39 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 09:53:42 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 09:53:42 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 3396 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 09:53:42 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 09:53:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 09:53:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 09:53:42 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 09:53:42 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 09:53:42 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:53:42 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 09:53:42 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 09:53:42 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 09:53:42 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 530 ms
+2024-12-22 09:53:43 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 09:53:43 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 09:53:43 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.133 seconds (process running for 1.836)
+2024-12-22 10:02:04 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:02:04 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:02:06 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:02:07 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 3593 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:02:07 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:02:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:02:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:02:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:02:07 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:02:07 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:02:07 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:02:07 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:02:07 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:02:07 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 476 ms
+2024-12-22 10:02:08 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:02:08 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:02:08 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.041 seconds (process running for 1.659)
+2024-12-22 10:02:46 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 10:02:46 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 10:02:46 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 10:10:33 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:10:33 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:10:35 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:10:35 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 3792 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:10:35 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:10:36 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:10:36 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:10:36 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:10:36 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:10:36 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:10:36 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:10:36 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:10:36 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:10:36 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 466 ms
+2024-12-22 10:10:36 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:10:36 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:10:36 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.031 seconds (process running for 1.957)
+2024-12-22 10:10:56 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 10:10:56 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 10:10:56 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 10:15:57 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:15:57 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:16:37 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:16:37 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 3963 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:16:37 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:16:37 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:16:37 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:16:37 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:16:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:16:38 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:16:38 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:16:38 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:16:38 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:16:38 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 482 ms
+2024-12-22 10:16:38 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:16:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:16:38 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.047 seconds (process running for 1.64)
+2024-12-22 10:16:57 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 10:16:57 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 10:16:57 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 10:25:04 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:25:04 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:25:06 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:25:07 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 4169 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:25:07 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:25:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:25:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:25:07 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:25:07 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:25:07 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:25:07 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:25:07 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:25:07 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:25:07 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 496 ms
+2024-12-22 10:25:08 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:25:08 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:25:08 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.067 seconds (process running for 1.663)
+2024-12-22 10:27:47 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:27:47 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:27:50 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:27:50 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 4241 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:27:50 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:27:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:27:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:27:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:27:51 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:27:51 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:27:51 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:27:51 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:27:51 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:27:51 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 474 ms
+2024-12-22 10:27:51 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:27:51 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:27:51 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.034 seconds (process running for 1.684)
+2024-12-22 10:28:10 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:28:10 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:28:12 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:28:12 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 4266 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:28:12 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:28:12 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:28:12 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:28:12 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:28:12 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:28:12 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:28:12 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:28:12 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:28:12 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:28:12 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 479 ms
+2024-12-22 10:28:13 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:28:13 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:28:13 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.076 seconds (process running for 1.663)
+2024-12-22 10:30:16 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 10:30:16 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 10:30:16 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 10:55:14 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 10:55:14 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 10:55:17 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 10:55:17 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 4931 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 10:55:17 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 10:55:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 10:55:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 10:55:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 10:55:17 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 10:55:17 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:55:17 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 10:55:17 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 10:55:17 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 10:55:17 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 495 ms
+2024-12-22 10:55:18 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 10:55:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 10:55:18 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.065 seconds (process running for 1.727)
+2024-12-22 10:55:41 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 10:55:41 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 10:55:41 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-12-22 11:03:14 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 11:03:14 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 11:03:17 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 11:03:17 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 5118 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 11:03:17 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 11:03:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 11:03:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 11:03:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 11:03:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 11:03:18 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:03:18 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 11:03:18 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 11:03:18 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 11:03:18 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 478 ms
+2024-12-22 11:03:18 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:03:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 11:03:18 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.071 seconds (process running for 1.653)
+2024-12-22 11:03:30 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 11:03:30 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 11:03:30 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 11:10:28 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 11:10:28 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 11:10:30 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 11:10:30 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 5293 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 11:10:30 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 11:10:30 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 11:10:30 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 11:10:30 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 11:10:30 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 11:10:31 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:10:31 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 11:10:31 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 11:10:31 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 11:10:31 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 480 ms
+2024-12-22 11:10:31 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:10:31 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 11:10:31 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.032 seconds (process running for 1.622)
+2024-12-22 11:11:18 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 11:11:18 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 11:11:18 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 11:27:21 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 11:27:21 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 11:27:23 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 11:27:23 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 5733 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 11:27:23 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 11:27:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 11:27:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 11:27:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-12-22 11:27:24 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 11:27:24 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:27:24 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 11:27:24 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 11:27:24 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 11:27:24 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 541 ms
+2024-12-22 11:27:24 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:27:24 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 11:27:24 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.107 seconds (process running for 1.83)
+2024-12-22 11:30:28 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 11:30:28 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 11:30:28 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-22 11:34:15 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-22 11:34:15 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2024-12-22 11:34:18 [main] INFO  io.redispro.redisexec.Main - Starting the Redis Exec application...
+2024-12-22 11:34:18 [main] INFO  io.redispro.redisexec.Main - Starting Main using Java 21.0.5 with PID 5902 (/Users/jonghwan/IdeaProjects/redis-exec/target/classes started by jonghwan in /Users/jonghwan/IdeaProjects/redis-exec)
+2024-12-22 11:34:18 [main] INFO  io.redispro.redisexec.Main - The following 1 profile is active: "local"
+2024-12-22 11:34:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-22 11:34:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-22 11:34:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2024-12-22 11:34:19 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+2024-12-22 11:34:19 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:34:19 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-12-22 11:34:19 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-22 11:34:19 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-12-22 11:34:19 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 617 ms
+2024-12-22 11:34:19 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+2024-12-22 11:34:19 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+2024-12-22 11:34:19 [main] INFO  io.redispro.redisexec.Main - Started Main in 1.248 seconds (process running for 1.868)
+2024-12-22 11:34:39 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-22 11:34:39 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-12-22 11:34:39 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
