@@ -59,36 +59,14 @@ public class JedisPoolCntr {
                     result.addData("value", getList(key));
                     break;
                 case SET:
-                    Set<String> setValues = jedis.smembers(key);
-                    result.addData("value", setValues);
+                    result.addData("value", getSet(key));
                     break;
                 case ZSET:
-                    /* score 없이 조회하는 경우
-                    List<String> sortedSetValues = jedis.zrange(key, 0, -1);
-                    result.put("value", sortedSetValues);
-                     */
-
-                    /*
-                     * ZSET(Sorted Set)은 Redis에서 각 원소가 점수(score)를 가지고 있어서 점수에 따라 자동으로 정렬됩니다.
-                     * jedis.zrange(key, 0, -1)는 기본적으로 점수가 낮은 것부터 높은 것까지의 값을 반환하지만,
-                     * 점수를 함께 조회하려면 zrangeWithScores를 사용해야 합니다.
-                     */
-                    // ZSET에서 점수와 함께 값을 조회
-                    List<Tuple> sortedSetWithScores = jedis.zrangeWithScores(key, 0, -1);
-
-                    // 결과를 저장할 리스트 생성
-                    List<Map<String, Object>> sortedSetValuesWithScores = new ArrayList<>();
-
-                    // Set에서 반환된 Tuple을 순회하여 점수와 값 분리
-                    for (Tuple tuple : sortedSetWithScores) {
-                        Map<String, Object> entry = new HashMap<>();
-                        entry.put("value", tuple.getElement());  // 값
-                        entry.put("score", tuple.getScore());    // 점수
-                        sortedSetValuesWithScores.add(entry);
-                    }
-
                     // 결과를 맵에 저장
-                    result.addData("value", sortedSetValuesWithScores);
+                    result.addData("value", getSortedSet(key));
+
+                    // score 없이 조회하는 경우
+                    result.addData("valueWithoutScore", jedis.zrange(key, 0, -1));
                     break;
                 case HASH:
                     Map<String, String> hashValues = jedis.hgetAll(key);
@@ -148,18 +126,16 @@ public class JedisPoolCntr {
                     addList(dataDto, result);
                     break;
                 case SET:
-                    jedis.sadd(key, value); // Set에 값 추가
-                    result.addData("value", value);
+                    addSet(dataDto, result);
                     break;
                 case ZSET:
-                    if (dataDto.getScore() != null) {
-                        double score = dataDto.getScore(); // ZSet에서 점수를 받을 경우
-                        jedis.zadd(key, score, value); // ZSet에 점수와 함께 값 추가
-                        result.addData("value", value);
-                        result.addData("score", score);
+                    if (dataDto.getSetValues() != null) {
+                        for (RedisDataDto.SortedSetData ss : dataDto.getSetValues()) {
+                            jedis.zadd(key, ss.getScore(), ss.getValue()); // ZSet에 점수와 함께 값 추가
+                        }
                     } else {
                         result.setStatus("error");
-                        result.setMessage("Score must be provided for ZSET.");
+                        result.setMessage("setValues must be provided for ZSET.");
                         return () -> result;
                     }
                     break;
@@ -279,6 +255,33 @@ public class JedisPoolCntr {
         }
     }
 
+    Set<String> getSet(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.smembers(key);
+        }
+    }
+
+    public List<Map<String, Object>> getSortedSet(String key) {
+        /*
+         * ZSET(Sorted Set)은 Redis에서 각 원소가 점수(score)를 가지고 있어서 점수에 따라 자동으로 정렬됩니다.
+         * jedis.zrange(key, 0, -1)는 기본적으로 점수가 낮은 것부터 높은 것까지의 값을 반환하지만,
+         * 점수를 함께 조회하려면 zrangeWithScores를 사용해야 합니다.
+         */
+
+        try (Jedis jedis = jedisPool.getResource()) {
+            List<Tuple> sortedSetWithScores = jedis.zrangeWithScores(key, 0, -1);
+
+            return sortedSetWithScores.stream()
+                    .map(tuple -> {
+                        Map<String, Object> entry = new HashMap<>();
+                        entry.put("value", tuple.getElement());
+                        entry.put("score", tuple.getScore());
+                        return entry;
+                    })
+                    .toList();
+        }
+    }
+
     void addString(RedisDataDto dataDto, ResponseDto result) {
         try (Jedis jedis = jedisPool.getResource()) {
             String key = dataDto.getKey();
@@ -310,6 +313,15 @@ public class JedisPoolCntr {
                 jedis.rpush(key, dataDto.getValues().toArray(new String[0])); // 맨 뒤에 추가
 
             result.addData("lastest", getList(key));
+        }
+    }
+
+    void addSet(RedisDataDto dataDto, ResponseDto result) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = dataDto.getKey();
+            result.addData("value", dataDto.getValues());
+            jedis.sadd(key, dataDto.getValues().toArray(new String[0]));
+            result.addData("lastest", getSet(key));
         }
     }
 

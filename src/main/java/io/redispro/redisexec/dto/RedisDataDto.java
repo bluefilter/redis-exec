@@ -17,6 +17,7 @@ public class RedisDataDto {
     private String streamField;    // stream의 경우 필드 이름
     private Double latitude;       // geo 데이터의 위도
     private Double longitude;      // geo 데이터의 경도
+    private List<SortedSetData> setValues;  // sortedset 데이터
     private List<GeoData> geoData; // Geo 데이터 리스트 (Geo 추가)
 
     private boolean bListLR;    // list 삽입방향, l = true r = false
@@ -50,5 +51,21 @@ public class RedisDataDto {
             this.longitude = longitude;
         }
     }
+
+    @Data
+    public static class SortedSetData {
+        private double score; // 점수 (null을 허용하지 않음)
+        private String value; // 값
+
+        // 기본 생성자 (필수로 필요할 경우)
+        public SortedSetData() {}
+
+        // 생성자
+        public SortedSetData(double score, String value) {
+            this.score = score;
+            this.value = value;
+        }
+    }
+
     // `@Data` 어노테이션에 의해 기본 생성자, getter, setter, toString, equals, hashCode 등이 자동 생성됩니다.
 }
