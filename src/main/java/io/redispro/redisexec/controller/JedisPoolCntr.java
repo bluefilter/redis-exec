@@ -128,27 +128,20 @@ public class JedisPoolCntr {
                     addSet(dataDto, result);
                     break;
                 case ZSET:
-                    if (dataDto.getSetValues() != null) {
-                        for (RedisDataDto.SortedSetData ss : dataDto.getSetValues()) {
-                            jedis.zadd(key, ss.getScore(), ss.getValue()); // ZSet에 점수와 함께 값 추가
-                        }
-                    } else {
+                    if (dataDto.getZsetValues() == null) {
                         result.setStatus("error");
-                        result.setMessage("setValues must be provided for ZSET.");
+                        result.setMessage("ZSetValues must not be null");
                         return () -> result;
-                    }
+                    } else
+                        addZSet(dataDto, result);
                     break;
                 case HASH:
-                    if (dataDto.getField() != null) {
-                        String field = dataDto.getField(); // 해시의 필드
-                        jedis.hset(key, field, value); // Hash에 필드와 값을 설정
-                        result.addData("field", field);
-                        result.addData("value", value);
-                    } else {
+                    if (dataDto.getHashValues() == null) {
                         result.setStatus("error");
-                        result.setMessage("Field must be provided for HASH.");
+                        result.setMessage("ZSetValues must not be null");
                         return () -> result;
-                    }
+                    } else
+                        addHash(dataDto, result);
                     break;
                 case STREAM:
                     if (dataDto.getStreamField() != null) {
@@ -178,9 +171,9 @@ public class JedisPoolCntr {
                     break;
                 case GEO:
                     // GEO 데이터 타입 처리
-                    if (dataDto.getGeoData() != null && !dataDto.getGeoData().isEmpty()) {
+                    if (dataDto.getGeoValues() != null && !dataDto.getGeoValues().isEmpty()) {
                         // GeoData 리스트를 순회하면서 GEO 데이터 추가
-                        for (RedisDataDto.GeoData geoData : dataDto.getGeoData()) {
+                        for (RedisDataDto.GeoData geoData : dataDto.getGeoValues()) {
                             if (geoData.getLatitude() != null && geoData.getLongitude() != null) {
                                 jedis.geoadd(key, geoData.getLongitude(), geoData.getLatitude(), geoData.getValue()); // GEO 데이터 추가
                                 result.addData("value", geoData.getValue());
@@ -317,10 +310,27 @@ public class JedisPoolCntr {
 
     void addSet(RedisDataDto dataDto, ResponseDto result) {
         try (Jedis jedis = jedisPool.getResource()) {
-            String key = dataDto.getKey();
+            jedis.sadd(dataDto.getKey(), dataDto.getValues().toArray(new String[0]));
+
             result.addData("value", dataDto.getValues());
-            jedis.sadd(key, dataDto.getValues().toArray(new String[0]));
-            result.addData("lastest", getSet(key));
+            result.addData("lastest", getSet(dataDto.getKey()));
+        }
+    }
+
+    void addZSet(RedisDataDto dataDto, ResponseDto result) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            for (RedisDataDto.ZSetData ss : dataDto.getZsetValues()) {
+                jedis.zadd(dataDto.getKey(), ss.getScore(), ss.getValue()); // ZSet에 점수와 함께 값 추가
+            }
+        }
+    }
+
+    void addHash(RedisDataDto dataDto, ResponseDto result) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            // RedisDataDto에서 HashData 리스트를 순회하며 Hash에 데이터 추가
+            for (RedisDataDto.HashData hashData : dataDto.getHashValues()) {
+                jedis.hset(dataDto.getKey(), hashData.getField(), hashData.getValue()); // Hash에 필드와 값 추가
+            }
         }
     }
 

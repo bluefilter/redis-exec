@@ -1,44 +1,47 @@
 package io.redispro.redisexec.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-
 
 @Data
 public class RedisDataDto {
 
+    private String dataType;       // 데이터 타입 (string, list, set, zset, hash, stream 등)
+
     private String key;            // Redis에서 사용할 키
+
     private String value;          // Redis에 설정할 값
     private List<String> values; // Redis에 설정할 값들
-    private String dataType;       // 데이터 타입 (string, list, set, zset, hash, stream 등)
-    private Double score;          // zset의 경우 점수 (Double로 변경)
-    private String field;          // hash의 경우 필드
+
     private String streamField;    // stream의 경우 필드 이름
     private Double latitude;       // geo 데이터의 위도
     private Double longitude;      // geo 데이터의 경도
-    private List<SortedSetData> setValues;  // sortedset 데이터
-    private List<GeoData> geoData; // Geo 데이터 리스트 (Geo 추가)
+
+    private List<ZSetData> zsetValues;  // sortedset 데이터
+    private List<HashData> hashValues;  // for hash
+    private List<GeoData> geoValues; // Geo 데이터 리스트 (Geo 추가)
 
     private boolean bListLR;    // list 삽입방향, l = true r = false
 
     // 기본 생성자 (자동 생성)
 
     // 필요한 값을 사용하여 객체를 초기화할 수 있는 생성자
-    public RedisDataDto(String key, String value, String dataType, Double score, String field, String streamField, Double latitude, Double longitude, List<GeoData> geoData) {
+    public RedisDataDto(String key, String value, String dataType, String streamField, Double latitude, Double longitude, List<GeoData> geoData) {
         this.key = key;
         this.value = value;
         this.dataType = dataType;
-        this.score = score;
-        this.field = field;
         this.streamField = streamField;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.geoData = geoData;
+        this.geoValues = geoData;
     }
 
     // GeoData 클래스 정의 (내부 클래스로 정의 가능)
-    @Data
+    @Getter
+    @Setter
     public static class GeoData {
         private String value;      // 장소 이름
         private Double latitude;   // 위도
@@ -52,17 +55,36 @@ public class RedisDataDto {
         }
     }
 
-    @Data
-    public static class SortedSetData {
+    @Getter
+    @Setter
+    public static class ZSetData {
         private double score; // 점수 (null을 허용하지 않음)
         private String value; // 값
 
         // 기본 생성자 (필수로 필요할 경우)
-        public SortedSetData() {}
+        public ZSetData() {
+        }
 
         // 생성자
-        public SortedSetData(double score, String value) {
+        public ZSetData(double score, String value) {
             this.score = score;
+            this.value = value;
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class HashData {
+        private String field; // 필드
+        private String value; // 값
+
+        // 기본 생성자 (필수로 필요할 경우)
+        public HashData() {
+        }
+
+        // 생성자
+        public HashData(String score, String value) {
+            this.field = score;
             this.value = value;
         }
     }
