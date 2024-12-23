@@ -2611,3 +2611,26 @@ Caused by: javax.management.InstanceAlreadyExistsException: MXBean already regis
 2024-12-22 22:03:54 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-12-22 22:03:54 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-12-22 22:03:54 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-12-23 00:48:16 [commons-pool-evictor] WARN  redis.clients.jedis.JedisFactory - Error while validating pooled Jedis object.
+redis.clients.jedis.exceptions.JedisConnectionException: Unexpected end of stream.
+	at redis.clients.jedis.util.RedisInputStream.ensureFill(RedisInputStream.java:259)
+	at redis.clients.jedis.util.RedisInputStream.readByte(RedisInputStream.java:55)
+	at redis.clients.jedis.Protocol.process(Protocol.java:131)
+	at redis.clients.jedis.Protocol.read(Protocol.java:221)
+	at redis.clients.jedis.Connection.protocolRead(Connection.java:379)
+	at redis.clients.jedis.Connection.readProtocolWithCheckingBroken(Connection.java:392)
+	at redis.clients.jedis.Connection.getStatusCodeReply(Connection.java:301)
+	at redis.clients.jedis.Jedis.ping(Jedis.java:340)
+	at redis.clients.jedis.JedisFactory.validateObject(JedisFactory.java:198)
+	at org.apache.commons.pool2.impl.GenericObjectPool.evict(GenericObjectPool.java:748)
+	at org.apache.commons.pool2.impl.BaseGenericObjectPool$Evictor.run(BaseGenericObjectPool.java:162)
+	at org.apache.commons.pool2.impl.EvictionTimer$WeakRunner.run(EvictionTimer.java:115)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset$$$capture(FutureTask.java:358)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-12-23 02:15:54 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-23 02:15:54 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete

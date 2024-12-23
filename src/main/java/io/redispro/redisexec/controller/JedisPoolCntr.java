@@ -2,7 +2,6 @@ package io.redispro.redisexec.controller;
 
 import io.redispro.redisexec.dto.RedisDataDto;
 import io.redispro.redisexec.dto.RedisDataType;
-import io.redispro.redisexec.dto.RedisQryDto;
 import io.redispro.redisexec.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
