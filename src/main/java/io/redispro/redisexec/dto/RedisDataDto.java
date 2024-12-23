@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class RedisDataDto {
@@ -22,6 +24,7 @@ public class RedisDataDto {
 
     private List<ZSetData> zsetValues;  // sortedset 데이터
     private List<HashData> hashValues;  // for hash
+    private List<StreamSampleData> streamValues;
     private List<GeoData> geoValues; // Geo 데이터 리스트 (Geo 추가)
 
     private boolean bListLR;    // list 삽입방향, l = true r = false
@@ -86,6 +89,25 @@ public class RedisDataDto {
         public HashData(String score, String value) {
             this.field = score;
             this.value = value;
+        }
+    }
+
+    /**
+     * Redis의 Stream 데이터 타입은 로그와 같은 시간 순서대로 정렬된 데이터를 저장하고 처리하는 데 사용되는 고급 데이터 구조입니다.
+     * Kafka 또는 RabbitMQ와 같은 메시지 큐 시스템과 유사하지만, Redis의 성능과 단순함을 활용합니다.
+     * Stream 데이터 타입은 생산자-소비자 모델에 최적화되어 있습니다.
+     */
+    @Getter
+    @Setter
+    public static class StreamSampleData {
+        private String user;
+        private String action;
+
+        public Map<String, String> getFields() {
+            Map<String, String> fields = new HashMap<>();
+            fields.put("user", this.user);
+            fields.put("action", this.action);
+            return fields;
         }
     }
 

@@ -62,25 +62,26 @@ public class JedisPoolCntr {
                     break;
                 case ZSET:
                     // 결과를 맵에 저장
-                    result.addData("value", getSortedSet(key));
-
+                    result.addData("value", getZSet(key, true));
                     // score 없이 조회하는 경우
-                    result.addData("valueWithoutScore", jedis.zrange(key, 0, -1));
+                    result.addData("valueWithoutScore", getZSet(key, false));
                     break;
                 case HASH:
-                    Map<String, String> hashValues = jedis.hgetAll(key);
-                    result.addData("value", hashValues);
+                    result.addData("value", getHash(key));
                     break;
                 case STREAM:
-                    // Stream 타입 처리
+// Stream 타입 처리
                     List<StreamEntry> streamEntries = jedis.xrange(key, "0", "+"); // 스트림의 첫 번째 항목부터 마지막 항목까지 조회
-                    List<Map<String, String>> streamValues = new ArrayList<>();
+                    List<Map<String, Object>> streamValues = new ArrayList<>(); // Object로 변경해 다양한 데이터 유형 수용
                     for (StreamEntry entry : streamEntries) {
-                        Map<String, String> entryData = new HashMap<>(entry.getFields());
+                        Map<String, Object> entryData = new HashMap<>();
+                        entryData.put("id", entry.getID().toString()); // 엔트리 ID 추가
+                        entryData.put("fields", entry.getFields()); // 필드 데이터 추가
                         streamValues.add(entryData);
                     }
                     result.addData("value", streamValues);
                     break;
+
                 case HYPERLOGLOG:
                     // PFCOUNT 명령어로 HyperLogLog의 고유 요소 개수 추정
                     result.addData("value", jedis.pfcount(key));
@@ -144,18 +145,20 @@ public class JedisPoolCntr {
                         addHash(dataDto, result);
                     break;
                 case STREAM:
-                    if (dataDto.getStreamField() != null) {
-                        Map<String, String> streamData = new HashMap<>();
-                        streamData.put(dataDto.getStreamField(), value); // Stream의 필드와 값 설정
+                    if (dataDto.getStreamValues() != null && !dataDto.getStreamValues().isEmpty()) {
+                        for (RedisDataDto.StreamSampleData streamData : dataDto.getStreamValues()) {
+                            // StreamSampleData 객체를 Map<String, String>으로 변환
+                            Map<String, String> fields = streamData.getFields();
 
-                        // XAddParams를 사용하여 추가적인 파라미터 설정 (Optional)
-                        XAddParams params = XAddParams.xAddParams().id(StreamEntryID.NEW_ENTRY); // 새로운 ID를 자동으로 생성하도록 설정
-                        jedis.xadd(key, params, streamData); // Stream에 값 추가
-                        result.addData("streamData", streamData);
+                            // XAddParams를 사용하여 추가적인 파라미터 설정 (Optional)
+                            XAddParams params = XAddParams.xAddParams().id(StreamEntryID.NEW_ENTRY); // 새로운 ID 자동 생성
+                            jedis.xadd(key, params, fields); // Stream에 데이터 추가
+                        }
+                        result.setStatus("success");
+                        result.setMessage("Stream data added successfully.");
                     } else {
                         result.setStatus("error");
-                        result.setMessage("Stream field must be provided.");
-                        return () -> result;
+                        result.setMessage("Stream values must be provided.");
                     }
                     break;
                 case HYPERLOGLOG:
@@ -253,7 +256,7 @@ public class JedisPoolCntr {
         }
     }
 
-    public List<Map<String, Object>> getSortedSet(String key) {
+    public List<?> getZSet(String key, boolean bWithScore) {
         /*
          * ZSET(Sorted Set)은 Redis에서 각 원소가 점수(score)를 가지고 있어서 점수에 따라 자동으로 정렬됩니다.
          * jedis.zrange(key, 0, -1)는 기본적으로 점수가 낮은 것부터 높은 것까지의 값을 반환하지만,
@@ -261,16 +264,26 @@ public class JedisPoolCntr {
          */
 
         try (Jedis jedis = jedisPool.getResource()) {
-            List<Tuple> sortedSetWithScores = jedis.zrangeWithScores(key, 0, -1);
+            if(bWithScore) {
+                List<Tuple> sortedSetWithScores = jedis.zrangeWithScores(key, 0, -1);
 
-            return sortedSetWithScores.stream()
-                    .map(tuple -> {
-                        Map<String, Object> entry = new HashMap<>();
-                        entry.put("value", tuple.getElement());
-                        entry.put("score", tuple.getScore());
-                        return entry;
-                    })
-                    .toList();
+                return sortedSetWithScores.stream()
+                        .map(tuple -> {
+                            Map<String, Object> entry = new HashMap<>();
+                            entry.put("value", tuple.getElement());
+                            entry.put("score", tuple.getScore());
+                            return entry;
+                        })
+                        .toList();
+            } else {
+                return jedis.zrange(key, 0, -1);
+            }
+        }
+    }
+
+    public Map<String, String> getHash(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.hgetAll(key);
         }
     }
 
