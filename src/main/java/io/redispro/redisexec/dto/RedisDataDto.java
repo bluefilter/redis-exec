@@ -25,6 +25,7 @@ public class RedisDataDto {
     private List<ZSetData> zsetValues;  // sortedset 데이터
     private List<HashData> hashValues;  // for hash
     private List<StreamSampleData> streamValues;
+    private List<BitmapData> bitmapValues;
     private List<GeoData> geoValues; // Geo 데이터 리스트 (Geo 추가)
 
     private boolean bListLR;    // list 삽입방향, l = true r = false
@@ -109,6 +110,13 @@ public class RedisDataDto {
             fields.put("action", this.action);
             return fields;
         }
+    }
+
+    @Getter
+    @Setter
+    public static class BitmapData {
+        private long index;
+        private boolean value;
     }
 
     // `@Data` 어노테이션에 의해 기본 생성자, getter, setter, toString, equals, hashCode 등이 자동 생성됩니다.

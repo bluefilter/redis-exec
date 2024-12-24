@@ -2,6 +2,7 @@ package io.redispro.redisexec.controller;
 
 import io.redispro.redisexec.dto.RedisDataDto;
 import io.redispro.redisexec.dto.RedisDataType;
+import io.redispro.redisexec.dto.RedisRequestDto;
 import io.redispro.redisexec.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -26,7 +27,7 @@ public class JedisPoolCntr {
     private final JedisPool jedisPool;
 
     @GetMapping("/get-value")
-    public Callable<?> getRedisValue(@RequestParam("dataType") String dataType, @RequestParam("key") String key) {
+    public Callable<?> getRedisValue(@ModelAttribute RedisRequestDto rDto) {
         // 응답 결과 객체
         ResponseDto result = new ResponseDto();
 
@@ -34,11 +35,11 @@ public class JedisPoolCntr {
         try (Jedis jedis = jedisPool.getResource()) {
 
             // key 의 타입 조회
-            String keyType = jedis.type(key);
+            String keyType = jedis.type(rDto.getKey());
             RedisDataType redisDataType;
 
             try {
-                redisDataType = RedisDataType.fromTypeName(dataType);
+                redisDataType = RedisDataType.fromTypeName(rDto.getDataType());
             } catch (IllegalArgumentException e) {
                 result.setStatus("error");
                 result.setMessage("Unsupported or unknown key type: " + keyType);
@@ -46,8 +47,9 @@ public class JedisPoolCntr {
             }
 
             // 데이터를 추가
-            result.addData("dataType", dataType);
-            result.addData("key", key);
+            final String key = rDto.getKey();
+            result.addData("dataType", rDto.getDataType());
+            result.addData("key", rDto.getKey());
 
             // 데이터 타입에 따라 처리
             switch (redisDataType) {
@@ -70,7 +72,7 @@ public class JedisPoolCntr {
                     result.addData("value", getHash(key));
                     break;
                 case STREAM:
-// Stream 타입 처리
+                    // Stream 타입 처리
                     List<StreamEntry> streamEntries = jedis.xrange(key, "0", "+"); // 스트림의 첫 번째 항목부터 마지막 항목까지 조회
                     List<Map<String, Object>> streamValues = new ArrayList<>(); // Object로 변경해 다양한 데이터 유형 수용
                     for (StreamEntry entry : streamEntries) {
@@ -81,7 +83,15 @@ public class JedisPoolCntr {
                     }
                     result.addData("value", streamValues);
                     break;
-
+                case BITMAP:
+                    // 인덱스와 값을 바로 매핑하여 리스트로 변환
+//                    List<Map<Long, Boolean>> bValues = rDto.getBitIndexs().stream()
+//                            .map(index -> Map.of(index, jedis.getbit(key, index))) // Map.of를 사용해 간단히 생성
+//                            .toList(); // Stream 결과를 List로 변환
+                    if (rDto.getBitIndexs() != null && !rDto.getBitIndexs().isEmpty())
+                        result.addData("value", rDto.getBitIndexs().stream()
+                                .map(index -> Map.of(index, jedis.getbit(key, index))));
+                    break;
                 case HYPERLOGLOG:
                     // PFCOUNT 명령어로 HyperLogLog의 고유 요소 개수 추정
                     result.addData("value", jedis.pfcount(key));
@@ -159,6 +169,23 @@ public class JedisPoolCntr {
                     } else {
                         result.setStatus("error");
                         result.setMessage("Stream values must be provided.");
+                    }
+                    break;
+                case BITMAP:
+                    /*
+                     * 장점
+                     * 비트 단위로 데이터 저장을 최적화하여 메모리 효율성이 높습니다.
+                     * 빠른 비트 연산을 지원해 대량 데이터 처리에 적합합니다.
+                     * 단점
+                     * 데이터를 비트 단위로 저장하므로 직관적이지 않으며, 비트를 인덱싱할 매핑 로직이 필요합니다.
+                     */
+                    if (dataDto.getBitmapValues() != null && !dataDto.getBitmapValues().isEmpty()) {
+                        for (RedisDataDto.BitmapData b : dataDto.getBitmapValues()) {
+                            jedis.setbit(key, b.getIndex(), b.isValue()); // ID 1001 출석
+                        }
+                    } else {
+                        result.setStatus("error");
+                        result.setMessage("Bitmap values must be provided.");
                     }
                     break;
                 case HYPERLOGLOG:
@@ -264,7 +291,7 @@ public class JedisPoolCntr {
          */
 
         try (Jedis jedis = jedisPool.getResource()) {
-            if(bWithScore) {
+            if (bWithScore) {
                 List<Tuple> sortedSetWithScores = jedis.zrangeWithScores(key, 0, -1);
 
                 return sortedSetWithScores.stream()
