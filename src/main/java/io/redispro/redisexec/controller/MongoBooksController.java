@@ -1,7 +1,7 @@
 package io.redispro.redisexec.controller;
 
 import io.redispro.redisexec.dto.ResponseDto;
-import io.redispro.redisexec.service.MongoUserService;
+import io.redispro.redisexec.service.MongoBooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +11,14 @@ import java.util.concurrent.Callable;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/mongodb", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class MongoUserController {
+public class MongoBooksController {
 
-    private final MongoUserService userService;
+    private final MongoBooksService booksService;
 
-    @GetMapping("/users")
-    public Callable<?> getUser(@RequestParam String name) {
+    @GetMapping("/books")
+    public Callable<?> getUser(@RequestParam String title) {
         ResponseDto result = new ResponseDto();
-        result.addData("value", userService.getUserByName(name));
+        result.addData("value", booksService.getByTitle(title));
         return () -> result;
     }
 }
