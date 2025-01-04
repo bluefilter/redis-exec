@@ -1,9 +1,11 @@
 package io.redispro.redisexec.controller;
 
+import io.redispro.redisexec.dto.Book;
 import io.redispro.redisexec.dto.ResponseDto;
 import io.redispro.redisexec.service.MongoBooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.Callable;
@@ -20,5 +22,11 @@ public class MongoBooksController {
         ResponseDto result = new ResponseDto();
         result.addData("value", booksService.getByTitle(title));
         return () -> result;
+    }
+
+    @PostMapping("/books")
+    public ResponseEntity<?> saveBook(@RequestBody Book book) {
+        booksService.saveBook(book);
+        return ResponseEntity.ok("Book saved successfully!");
     }
 }

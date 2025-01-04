@@ -3,7 +3,9 @@ package io.redispro.redisexec.repository;
 import io.redispro.redisexec.dto.Book;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 public interface MongoBooksRepository extends MongoRepository<Book, String> {
-    // 추가적인 쿼리 메서드 정의 가능
-    Book findByTitle(String name);
+    // title 값으로 여러 결과를 반환하도록 수정
+    List<Book> findByTitle(String title);
 }
