@@ -38,7 +38,6 @@
         <!--&lt;!&ndash;            <scope>provided</scope>&ndash;&gt;-->
         <!--        </dependency>-->
 
-
         <!-- AspectJ 관련 의존성 추가 -->
         <dependency>
             <groupId>org.aspectj</groupId>

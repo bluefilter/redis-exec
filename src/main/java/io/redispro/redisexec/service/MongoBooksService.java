@@ -7,11 +7,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
-
 
 import java.util.List;
 
@@ -43,7 +40,6 @@ public class MongoBooksService {
         }
         return mongoTemplate.find(query, Book.class);
     }
-
 
     public List<Book> getByTitle(String title) {
         List<Book> books = booksRepository.findByTitle(title);
