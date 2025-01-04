@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 @RestController
@@ -20,13 +21,48 @@ public class MongoBooksController {
     @GetMapping("/books")
     public Callable<?> getUser(@RequestParam String title) {
         ResponseDto result = new ResponseDto();
-        result.addData("value", booksService.getByTitle(title));
+        List<Book> books = booksService.getByTitle(title);
+
+        result.addData("count", books == null ? 0 : books.size());
+        result.addData("value", books);
+
         return () -> result;
     }
 
+    // 동기식 처리
+//    @PostMapping("/books")
+//    public ResponseEntity<?> saveBook(@RequestBody Book book) {
+//        booksService.saveBook(book);
+//        return ResponseEntity.ok("Book saved successfully!");
+//    }
+
     @PostMapping("/books")
-    public ResponseEntity<?> saveBook(@RequestBody Book book) {
+    public Callable<?> saveBook(@RequestBody Book book) {
+        ResponseDto result = new ResponseDto();
+
         booksService.saveBook(book);
-        return ResponseEntity.ok("Book saved successfully!");
+
+        result.addData("count", 1);
+        result.addData("value", book);
+        result.setMessage("Book saved successfully!");
+
+        return () -> result;
+    }
+
+    // id로 책 삭제
+    @DeleteMapping("/books")
+    public ResponseEntity<?> deleteBook(@RequestParam String id) {
+        long count = booksService.deleteByIdWithCount(id);
+
+        ResponseDto result = new ResponseDto();
+        result.addData("count", count);
+        // 삼항 연산자 수정
+        if (count == 1) {
+            result.setMessage("Book deleted successfully!");
+        } else {
+            result.setMessage("Book not found!");
+        }
+
+        return ResponseEntity.ok(result);
     }
 }
