@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class MongoBooksService {
         booksRepository.deleteById(id);
     }
 
+    @Transactional
     public long updateByIdWithCount(ObjectId id, Book updated) {
         // 삭제할 Book 객체 찾기
         Book existing = mongoTemplate.findById(id, Book.class);
