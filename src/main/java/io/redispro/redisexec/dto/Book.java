@@ -18,12 +18,16 @@ public class Book {
 
     @Id
     private ObjectId id;
+
+    @Transient // 이 필드는 MongoDB에 저장되지 않음
+    private String clientId;
+
     private String title;
     private String author;
     private int year;
     private String genre;
     private double price;
-    private boolean isAvailable;
+    private Boolean isAvailable;
     private Date publishDate;
     private List<Double> ratings;
     private List<Review> reviews;
@@ -35,8 +39,6 @@ public class Book {
     private byte[] inStock;
     private long isbn;
 
-    @Transient // 이 필드는 MongoDB에 저장되지 않음
-    private String clientId;
 
     /*
     MongoDB에서는 @PostConstruct, @PostLoad, @PrePersist와 같은 JPA 콜백을 사용할 수 없습니다.

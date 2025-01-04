@@ -3,6 +3,7 @@ package io.redispro.redisexec.service;
 import io.redispro.redisexec.dto.Book;
 import io.redispro.redisexec.repository.MongoBooksRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,44 @@ public class MongoBooksService {
     }
 
     // id로 책 삭제
-    public void deleteBookById(String id) {
+    public void deleteBookById(ObjectId id) {
         // id를 ObjectId로 변환하여 삭제
         booksRepository.deleteById(id);
     }
 
-    public long deleteByIdWithCount(String id) {
+    public long updateByIdWithCount(ObjectId id, Book updatedBook) {
+        // 삭제할 Book 객체 찾기
+        Book existingBook = mongoTemplate.findById(id, Book.class);
+
+        // 해당 Book이 존재하면 삭제 후 삭제된 갯수 반환
+        if (existingBook != null) {
+            // 기존 책 데이터 업데이트
+            existingBook.setTitle(updatedBook.getTitle());
+            existingBook.setAuthor(updatedBook.getAuthor());
+            existingBook.setYear(updatedBook.getYear());
+            existingBook.setGenre(updatedBook.getGenre());
+            existingBook.setPrice(updatedBook.getPrice());
+            existingBook.setIsAvailable(updatedBook.getIsAvailable());
+            existingBook.setPublishDate(updatedBook.getPublishDate());
+            existingBook.setRatings(updatedBook.getRatings());
+            existingBook.setReviews(updatedBook.getReviews());
+            existingBook.setTags(updatedBook.getTags());
+            existingBook.setMetadata(updatedBook.getMetadata());
+            existingBook.setDiscountCode(updatedBook.getDiscountCode());
+            existingBook.setSales(updatedBook.getSales());
+            existingBook.setInStock(updatedBook.getInStock());
+            existingBook.setIsbn(updatedBook.getIsbn());
+
+            // 업데이트된 책 데이터 저장
+            this.saveBook(existingBook);
+
+            return 1;  // 삭제된 갯수 반환
+        } else {
+            return 0;  // 삭제할 레코드가 없다면 0 반환
+        }
+    }
+
+    public long deleteByIdWithCount(ObjectId id) {
         // 삭제할 Book 객체 찾기
         Book bookToDelete = mongoTemplate.findById(id, Book.class);
 
