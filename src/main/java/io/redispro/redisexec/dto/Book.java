@@ -1,6 +1,5 @@
 package io.redispro.redisexec.dto;
 
-import jakarta.annotation.PostConstruct;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -9,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Setter
 @Getter
@@ -24,9 +22,9 @@ public class Book {
 
     private String title;
     private String author;
-    private int year;
+    private Integer year;
     private String genre;
-    private double price;
+    private Double price;
     private Boolean isAvailable;
     private Date publishDate;
     private List<Double> ratings;
@@ -36,8 +34,8 @@ public class Book {
     private Metadata metadata;
     private String discountCode;
     private Sales sales;
-    private byte[] inStock;
-    private long isbn;
+    private Byte[] inStock;
+    private Long isbn;
 
 
     /*
@@ -91,4 +89,28 @@ public class Book {
     }
 
     // Getters and setters for all fields
+
+    /**
+     * 다른 Book 객체의 데이터를 현재 Book 객체에 복사
+     *
+     * @param sourceBook 데이터를 복사할 원본 Book 객체
+     */
+    public void updateFrom(Book sourceBook) {
+        this.title = sourceBook.title;
+        this.author = sourceBook.author;
+        this.year = sourceBook.year;
+        this.genre = sourceBook.genre;
+        this.price = sourceBook.price;
+        this.isAvailable = sourceBook.isAvailable;
+        this.publishDate = sourceBook.publishDate;
+        this.ratings = sourceBook.ratings;
+        this.reviews = sourceBook.reviews;
+        this.authors = sourceBook.authors;
+        this.tags = sourceBook.tags;
+        this.metadata = sourceBook.metadata;
+        this.discountCode = sourceBook.discountCode;
+        this.sales = sourceBook.sales;
+        this.inStock = sourceBook.inStock;
+        this.isbn = sourceBook.isbn;
+    }
 }

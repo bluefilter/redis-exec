@@ -37,31 +37,17 @@ public class MongoBooksService {
         booksRepository.deleteById(id);
     }
 
-    public long updateByIdWithCount(ObjectId id, Book updatedBook) {
+    public long updateByIdWithCount(ObjectId id, Book updated) {
         // 삭제할 Book 객체 찾기
-        Book existingBook = mongoTemplate.findById(id, Book.class);
+        Book existing = mongoTemplate.findById(id, Book.class);
 
         // 해당 Book이 존재하면 삭제 후 삭제된 갯수 반환
-        if (existingBook != null) {
+        if (existing != null) {
             // 기존 책 데이터 업데이트
-            existingBook.setTitle(updatedBook.getTitle());
-            existingBook.setAuthor(updatedBook.getAuthor());
-            existingBook.setYear(updatedBook.getYear());
-            existingBook.setGenre(updatedBook.getGenre());
-            existingBook.setPrice(updatedBook.getPrice());
-            existingBook.setIsAvailable(updatedBook.getIsAvailable());
-            existingBook.setPublishDate(updatedBook.getPublishDate());
-            existingBook.setRatings(updatedBook.getRatings());
-            existingBook.setReviews(updatedBook.getReviews());
-            existingBook.setTags(updatedBook.getTags());
-            existingBook.setMetadata(updatedBook.getMetadata());
-            existingBook.setDiscountCode(updatedBook.getDiscountCode());
-            existingBook.setSales(updatedBook.getSales());
-            existingBook.setInStock(updatedBook.getInStock());
-            existingBook.setIsbn(updatedBook.getIsbn());
+            existing.updateFrom(updated);
 
             // 업데이트된 책 데이터 저장
-            this.saveBook(existingBook);
+            this.saveBook(existing);
 
             return 1;  // 삭제된 갯수 반환
         } else {
