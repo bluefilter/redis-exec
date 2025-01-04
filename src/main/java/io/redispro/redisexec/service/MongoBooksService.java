@@ -5,7 +5,13 @@ import io.redispro.redisexec.repository.MongoBooksRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Query;
+
 
 import java.util.List;
 
@@ -19,6 +25,25 @@ public class MongoBooksService {
     public void saveBook(Book book) {
         booksRepository.save(book);
     }
+
+    public List<Book> getAllBooks(Pageable pageable) {
+        return mongoTemplate.findAll(Book.class).stream()
+                .skip((long) pageable.getPageNumber() * pageable.getPageSize())
+                .limit(pageable.getPageSize())
+                .toList();
+    }
+
+    public List<Book> getByTitleAndPattern(String title, String pattern) {
+        Query query = new Query();
+        if (title != null && !title.isEmpty()) {
+            query.addCriteria(Criteria.where("title").regex(title, "i"));
+        }
+        if (pattern != null && !pattern.isEmpty()) {
+            query.addCriteria(Criteria.where("title").regex(pattern, "i"));
+        }
+        return mongoTemplate.find(query, Book.class);
+    }
+
 
     public List<Book> getByTitle(String title) {
         List<Book> books = booksRepository.findByTitle(title);

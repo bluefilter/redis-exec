@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
 
+
 @Configuration
 public class MongoConfig {
     @Value("${spring.data.mongodb.uri}")

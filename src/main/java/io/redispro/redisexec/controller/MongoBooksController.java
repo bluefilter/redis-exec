@@ -9,8 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +25,22 @@ public class MongoBooksController {
     private final MongoBooksService booksService;
 
     @GetMapping("/books")
-    public Callable<?> getUser(@RequestParam String title) {
+    public Callable<?> getUser(@RequestParam(required = false) String title
+            , @RequestParam(required = false) String pattern
+            , @RequestParam(defaultValue = "0") int page
+            , @RequestParam(defaultValue = "10") int pageSize) {
+
+        List<Book> books = new ArrayList<>();
+
         ResponseDto result = new ResponseDto();
-        List<Book> books = booksService.getByTitle(title);
+
+        if ("*".equals(pattern)) {
+            // 모든 문서를 조회, 페이지 크기 10
+            Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Direction.ASC, "title"));
+            books = booksService.getAllBooks(pageable);
+        } else {
+            books = booksService.getByTitleAndPattern(title, pattern);
+        }
 
         result.addData("count", books == null ? 0 : books.size());
         result.addData("value", books);

@@ -34,7 +34,7 @@ public class Book {
     private Metadata metadata;
     private String discountCode;
     private Sales sales;
-    private Byte[] inStock;
+    private byte[] inStock;
     private Long isbn;
 
 
