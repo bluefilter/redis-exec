@@ -1,10 +1,28 @@
 spring:
+  jpa:
+    open-in-view: false
+#    properties:
+#      hibernate:
+#        connection.provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
   data:
     mongodb:
       uri: mongodb://jjh:jjh@localhost:27017/book
     redis:
       port: 6379
       host: localhost
+  datasource:
+    url: jdbc:postgresql://localhost:5432/EMA
+    username: joey
+    password: EmaEma*#7531
+    hikari:
+      jdbc-url: jdbc:postgresql://localhost:5432/EMA
+      username: joey
+      password: EmaEma*#7531
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      connection-timeout: 30000
+      max-lifetime: 1800000
 
 #logging:
 #  config: classpath:log4j2-spring-local.yml
