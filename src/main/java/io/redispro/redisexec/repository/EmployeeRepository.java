@@ -1,0 +1,10 @@
+package io.redispro.redisexec.repository;
+
+
+import io.redispro.redisexec.dto.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+}
