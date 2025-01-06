@@ -2,6 +2,7 @@ package io.redispro.redisexec.controller;
 
 import io.redispro.redisexec.dto.ResponseDto;
 
+import io.redispro.redisexec.utils.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
