@@ -22,7 +22,7 @@ import java.util.concurrent.Callable;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/redis/jedis-pool", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class JedisPoolCntr {
+public class JedisPoolController {
 
     private final JedisPool jedisPool;
 

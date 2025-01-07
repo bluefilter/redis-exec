@@ -2,7 +2,6 @@ package io.redispro.redisexec.controller;
 
 import io.redispro.redisexec.dto.ResponseDto;
 
-import io.redispro.redisexec.utils.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +21,9 @@ import java.util.concurrent.Callable;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/server/info", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class ServerCntr {
+public class ServerController {
 
-    private static final Logger log = LoggerFactory.getLogger(ServerCntr.class);
+    private static final Logger log = LoggerFactory.getLogger(ServerController.class);
 
     // Environment 필드 선언, @RequiredArgsConstructor 가 생성자에서 자동으로 주입
     private final Environment environment;
