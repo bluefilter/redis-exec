@@ -24,11 +24,11 @@ spring:
       connection-timeout: 30000
       max-lifetime: 1800000
 
-#logging:
-#  config: classpath:log4j2-spring-local.yml
-#  level:
-#    root: info
-#    feign: debug
-#    com.twolinecode.com: debug
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
 
 

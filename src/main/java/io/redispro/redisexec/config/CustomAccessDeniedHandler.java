@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/*
+GlobalExceptionHander에서 처리하도록 수정함.
+ */
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 

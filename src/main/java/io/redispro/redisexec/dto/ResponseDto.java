@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @Getter
@@ -12,7 +13,7 @@ public class ResponseDto {
     // Getter, Setter
     private String status;  // 성공 / 실패 상태
     private String message; // 에러 메시지 또는 상태 메시지
-    private LinkedHashMap<String, Object> data;    // 실제 데이터 (데이터 타입에 따라 다르게 할당)
+    private Map<String, Object> data;    // 실제 데이터 (데이터 타입에 따라 다르게 할당)
 
     // 기본 생성자
     public ResponseDto() {

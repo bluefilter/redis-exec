@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.List;
 
 public class JwtUtil {
 
@@ -13,10 +14,11 @@ public class JwtUtil {
     private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간
 
-    public static String generateToken(String username) {
+    public static String generateToken(String username, List<String> roles) {
         Date now = new Date();
         return Jwts.builder()
                 .claim("sub", username) // 'sub' 클레임 설정
+                .claim("roles", roles) // 역할 정보 추가
                 .claim("iat", now) // 'iat' 클레임 설정
                 .claim("exp", new Date(now.getTime() + EXPIRATION_TIME)) // 'exp' 클레임 설정
                 .signWith(KEY) // 새로운 방식으로 서명
