@@ -3,6 +3,10 @@ package io.redispro.redisexec.controller;
 import io.redispro.redisexec.dto.ResponseDto;
 import io.redispro.redisexec.dto.AppUserDto;
 import io.redispro.redisexec.service.AppUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,8 +47,16 @@ public class AppUserController {
         return ResponseEntity.ok(result); // 성공적으로 삭제된 경우 200 OK 반환
     }
 
+    @Operation(summary = "Get user by ID", description = "Retrieve user details using the user's unique ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid ID supplied")
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(
+            @Parameter(description = "ID of the user to be retrieved", required = true)
+            @PathVariable Long id) {
         // 사용자 삭제 로직
         ResponseDto result = new ResponseDto();
         result.setData(appUserService.getUserById(id)); // 삭제된 결과 반환

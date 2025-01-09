@@ -9,7 +9,14 @@ spring:
 server:
   port: 8000
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui  # Swagger UI 접근 경로
+  api-docs:
+    path: /api-docs   # Swagger JSON API 문서 경로
+
+
 logging:
   level:
     #root: info # INFO 레벨 이상의 메시지만 출력하도록 설정합니다.   INFO, WARN, ERROR 레벨의 로그 메시지가 출력됩니다.  DEBUG, TRACE 레벨의 메시지는 무시됩니다.
-    root: info #off error warn info debug trace
+    root: debug #off error warn info debug trace

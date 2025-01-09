@@ -57,10 +57,11 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
+                        // Swagger UI 관련 경로는 인증 없이 접근 가능
+                        .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html", "/favicon.ico").permitAll()
                         .requestMatchers("/api/auth/login").permitAll() // /api/auth/login 경로는 인증 없이 접근 가능
-                        .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN") // ADMIN Role 필요
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")  // DELETE /api/users/{id} 경로는 ADMIN Role 필요
-                        //.requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")  // DELETE /api/users/{id} 경로는 ADMIN Role 필요.requestMatchers("/api/users/**").hasAuthority("ADMIN") // 권한 확인
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN") // 사용자 등록
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")  // 사용자 삭제
                         .anyRequest().authenticated() // 그 외의 경로는 인증 필요
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터를 인증 필터 앞에 추가
