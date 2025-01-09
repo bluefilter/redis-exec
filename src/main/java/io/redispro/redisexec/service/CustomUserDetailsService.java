@@ -1,7 +1,7 @@
 package io.redispro.redisexec.service;
 
 import io.redispro.redisexec.dto.AppUser;
-import io.redispro.redisexec.repository.UserRepository;
+import io.redispro.redisexec.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = userRepository.findByUsername(username)
+        AppUser appUser = appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         return User.builder()

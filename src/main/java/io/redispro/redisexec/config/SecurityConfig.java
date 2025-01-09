@@ -5,6 +5,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -57,8 +58,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/login").permitAll() // /api/auth/login 경로는 인증 없이 접근 가능
-                        .requestMatchers("/api/users/register").hasAuthority("ADMIN") // ADMIN Role 필요
-                        .requestMatchers("/api/users/**").hasAuthority("ADMIN") // 권한 확인
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN") // ADMIN Role 필요
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")  // DELETE /api/users/{id} 경로는 ADMIN Role 필요
+                        //.requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")  // DELETE /api/users/{id} 경로는 ADMIN Role 필요.requestMatchers("/api/users/**").hasAuthority("ADMIN") // 권한 확인
                         .anyRequest().authenticated() // 그 외의 경로는 인증 필요
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터를 인증 필터 앞에 추가
@@ -71,6 +73,13 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 인증
                 );
 
+        /*
+        https://ppusda.tistory.com/83
+        단순히 요청 시에만 인증정보를 확인하는 게 아니라 응답 시에도 인증 정보를 한번 더 검사한다.
+        이는 보안을 위한 요소로 Spring security는 보통 SecurityContext를 저장소에 저장하여 관리한다.
+        Spring Security 6 버전 부터 SecurityContext를 관리하는 기본 방식인 SecurityContextHolderFilter 를 사용하게 되었다.
+        SecurityContextHolderFilter 는 이전 버전과는 다르게 SecurityContextRepository 의 구현체를 등록해주지 않으면 인증 객체를 저장할 수 없다는 점이 문제였다.
+         */
         http.securityContext((securityContext) -> securityContext
                 .securityContextRepository(new DelegatingSecurityContextRepository(
                         new RequestAttributeSecurityContextRepository(),
