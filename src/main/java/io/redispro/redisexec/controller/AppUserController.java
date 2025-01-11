@@ -49,11 +49,6 @@ public class AppUserController {
     }
 
     @Operation(summary = "사용자 조회 API", tags = {"User API"}, description = "Retrieve user details using the user's unique ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User retrieved successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found"),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied")
-    })
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(
             @Parameter(description = "ID of the user to be retrieved", required = true)

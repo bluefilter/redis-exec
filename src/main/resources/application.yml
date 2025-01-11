@@ -13,6 +13,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui  # Swagger UI 접근 경로
     tags-sorter: none
+#    operations-sorter: method
   api-docs:
     path: /api-docs   # Swagger JSON API 문서 경로
 
