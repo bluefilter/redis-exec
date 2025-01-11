@@ -7,18 +7,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.Callable;
 
+//@Tag(name = "User API", description = "사용자 관리 API")
 @RestController
 @RequestMapping(value = "/api/users", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
@@ -26,6 +25,7 @@ public class AppUserController {
 
     private final AppUserService appUserService;
 
+    @Operation(summary = "사용자 등록 API", tags = {"User API"})
     // 사용자등록
     @PostMapping("")
     public ResponseEntity<?> registerUser(@RequestBody AppUserDto appUserDto) {
@@ -37,6 +37,7 @@ public class AppUserController {
         return ResponseEntity.ok(result); // 성공적으로 삭제된 경우 200 OK 반환
     }
 
+    @Operation(summary = "사용자 삭제 API", tags = {"User API"})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         // 사용자 삭제 로직
@@ -47,7 +48,7 @@ public class AppUserController {
         return ResponseEntity.ok(result); // 성공적으로 삭제된 경우 200 OK 반환
     }
 
-    @Operation(summary = "Get user by ID", description = "Retrieve user details using the user's unique ID")
+    @Operation(summary = "사용자 조회 API", tags = {"User API"}, description = "Retrieve user details using the user's unique ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "User not found"),
@@ -65,6 +66,7 @@ public class AppUserController {
         return ResponseEntity.ok(result); // 성공적으로 삭제된 경우 200 OK 반환
     }
 
+    @Operation(summary = "전체 사용자 조회 API", tags = {"User API"})
     // 전체 사용자 정보 페이지 단위 조회 (Callable로 비동기 처리)
     @GetMapping("/all")
     public Callable<?> getAllUsers(@RequestParam(defaultValue = "0") int page,
@@ -77,12 +79,14 @@ public class AppUserController {
         };
     }
 
+    @Operation(summary = "사용자 정보 수정 API", tags = {"User API"})
     // 사용자 정보 갱신 (PUT /api/users/{id})
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody AppUserDto appUserDto) {
         return ResponseEntity.ok(appUserService.updateUser(id, appUserDto)); // 200 OK
     }
 
+    @Operation(summary = "사용자 비밀번호 수정 API", tags = {"User API"})
     // 비밀번호 변경 (PUT /api/users/{id}/change-password)
     @PutMapping("/{id}/change-password")
     public ResponseEntity<?> changePassword(
