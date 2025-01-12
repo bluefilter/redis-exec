@@ -10,12 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
-    Optional<AppUser> findByUsername(String username);
+    Optional<AppUser> findByUserid(String username);
 
-    boolean existsByUsername(String username); // 중복 사용자 체크
+    boolean existsByUserid(String username); // 중복 사용자 체크
 
     @Modifying
-    @Query("DELETE FROM AppUser u WHERE u.username = :username")
-    int deleteByUsername(String username); // 삭제된 행 수 반환
+    @Query("DELETE FROM AppUser u WHERE u.userid = :username")
+    int deleteByUserid(String username); // 삭제된 행 수 반환
     // id로 삭제
 }

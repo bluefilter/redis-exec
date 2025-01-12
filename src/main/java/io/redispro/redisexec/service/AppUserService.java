@@ -23,7 +23,7 @@ public class AppUserService {
     @Transactional
     public String registerUser(AppUserDto appUserDto) {
         // 사용자 이름 중복 체크
-        if (appUserRepository.existsByUsername(appUserDto.getUsername())) {
+        if (appUserRepository.existsByUserid(appUserDto.getUserid())) {
             throw new IllegalArgumentException("이미 존재하는 사용자 이름입니다.");
         }
 
@@ -32,7 +32,7 @@ public class AppUserService {
 
         // 사용자 저장
         AppUser user = new AppUser();
-        user.setUsername(appUserDto.getUsername());
+        user.setUserid(appUserDto.getUserid());
         user.setPassword(encodedPassword);
         user.setRole(appUserDto.getRole().toUpperCase());
 
@@ -67,16 +67,31 @@ public class AppUserService {
         return result;
     }
 
-    public String generateTokenForUser(String username) {
+    public Map<String, Object> generateAccessTokenForUser(String userid) {
         // 사용자 정보 및 역할을 DB에서 조회
-        AppUser user = appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        AppUser user = appUserRepository.findByUserid(userid)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userid));
 
         // 사용자의 역할 정보
         List<String> roles = Collections.singletonList(user.getRole());  // 역할 정보를 가져오는 방법은 구현에 따라 다를 수 있습니다.
 
         // JWT 토큰 생성
-        return JwtUtil.generateToken(username, roles);
+        return new LinkedHashMap<>() {{
+            put("access_token", JwtUtil.generateAccessToken(userid, roles));
+            put("access_token_exp", JwtUtil.getAccessTokenExpirationTime());
+        }};
+    }
+
+    public Map<String, Object> generateRefreshTokenForUser(String userid) {
+        // 사용자 정보 및 역할을 DB에서 조회
+        AppUser user = appUserRepository.findByUserid(userid)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userid));
+
+        // JWT 토큰 생성
+        return new LinkedHashMap<>() {{
+            put("refresh_token", JwtUtil.generateRefreshToken(userid));
+            put("refresh_token_exp", JwtUtil.getRefreshTokenExpirationTime());
+        }};
     }
 
     @Transactional
@@ -110,7 +125,7 @@ public class AppUserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
 
         // 사용자 정보 갱신
-        appUser.setUsername(appUserDto.getUsername());
+        appUser.setUserid(appUserDto.getUserid());
         appUser.setPassword(passwordEncoder.encode(appUserDto.getPassword())); // 비밀번호는 암호화 처리해야 함
         appUser.setRole(appUserDto.getRole());
 

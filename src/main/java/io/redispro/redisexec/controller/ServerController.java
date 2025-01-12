@@ -1,6 +1,6 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.ResponseDto;
+import io.redispro.redisexec.dto.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class ServerController {
     public Callable<?> getInfo() {
         log.info("get");
 
-        ResponseDto result = new ResponseDto();
+        ApiResponse result = new ApiResponse();
         try {
             result.addData("activeProfile", environment.getActiveProfiles()[0]);
 

@@ -3,6 +3,7 @@ package io.redispro.redisexec.filter;
 import io.jsonwebtoken.Claims;
 import io.redispro.redisexec.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         System.out.println("doFilterInternal 호출됨: " + request.getRequestURI());
 
         // 요청에서 Authorization 헤더를 가져옵니다.
@@ -58,6 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     // 역할 정보를 Claims에서 추출하는 메서드
+    @SuppressWarnings("unchecked") // 경고를 무시
     private List<GrantedAuthority> getAuthorities(Claims claims) {
         List<String> roles = claims.get("roles", List.class); // "roles" 클레임에서 역할 정보 추출
         return roles.stream()

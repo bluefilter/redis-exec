@@ -3,7 +3,7 @@ package io.redispro.redisexec.controller;
 import io.redispro.redisexec.dto.RedisDataDto;
 import io.redispro.redisexec.dto.RedisDataType;
 import io.redispro.redisexec.dto.RedisRequestDto;
-import io.redispro.redisexec.dto.ResponseDto;
+import io.redispro.redisexec.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class JedisPoolController {
     @GetMapping("/get-value")
     public Callable<?> getRedisValue(@ModelAttribute RedisRequestDto rDto) {
         // 응답 결과 객체
-        ResponseDto result = new ResponseDto();
+        ApiResponse result = new ApiResponse();
 
         // Jedis 객체를 풀에서 빌려오기
         try (Jedis jedis = jedisPool.getResource()) {
@@ -116,7 +116,7 @@ public class JedisPoolController {
     @PostMapping("/set-value")
     public Callable<?> setRedisValue(@RequestBody RedisDataDto dataDto) {
         // 응답 결과 객체
-        ResponseDto result = new ResponseDto();
+        ApiResponse result = new ApiResponse();
 
         // Jedis 객체를 풀에서 빌려오기
         try (Jedis jedis = jedisPool.getResource()) {
@@ -236,7 +236,7 @@ public class JedisPoolController {
 
     @DeleteMapping("/delete-keys")
     public Callable<?> deleteRedisKeys(@RequestParam List<String> keys) {
-        ResponseDto result = new ResponseDto();
+        ApiResponse result = new ApiResponse();
 
         try (Jedis jedis = jedisPool.getResource()) {
             List<String> nonExistentKeys = new ArrayList<>();
@@ -314,7 +314,7 @@ public class JedisPoolController {
         }
     }
 
-    void addString(RedisDataDto dataDto, ResponseDto result) {
+    void addString(RedisDataDto dataDto, ApiResponse result) {
         try (Jedis jedis = jedisPool.getResource()) {
             String key = dataDto.getKey();
             String value = dataDto.getValue(); // Redis에 설정할 값
@@ -333,7 +333,7 @@ public class JedisPoolController {
         리스트의 각 요소는 입력된 순서대로 정렬됩니다(삽입 순서를 유지).
         리스트는 최대 약 2^32 - 1 (약 40억 개)의 항목을 저장할 수 있습니다.
     */
-    void addList(RedisDataDto dataDto, ResponseDto result) {
+    void addList(RedisDataDto dataDto, ApiResponse result) {
         try (Jedis jedis = jedisPool.getResource()) {
             String key = dataDto.getKey();
 
@@ -348,7 +348,7 @@ public class JedisPoolController {
         }
     }
 
-    void addSet(RedisDataDto dataDto, ResponseDto result) {
+    void addSet(RedisDataDto dataDto, ApiResponse result) {
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.sadd(dataDto.getKey(), dataDto.getValues().toArray(new String[0]));
 
@@ -357,7 +357,7 @@ public class JedisPoolController {
         }
     }
 
-    void addZSet(RedisDataDto dataDto, ResponseDto result) {
+    void addZSet(RedisDataDto dataDto, ApiResponse result) {
         try (Jedis jedis = jedisPool.getResource()) {
             for (RedisDataDto.ZSetData ss : dataDto.getZsetValues()) {
                 jedis.zadd(dataDto.getKey(), ss.getScore(), ss.getValue()); // ZSet에 점수와 함께 값 추가
@@ -365,7 +365,7 @@ public class JedisPoolController {
         }
     }
 
-    void addHash(RedisDataDto dataDto, ResponseDto result) {
+    void addHash(RedisDataDto dataDto, ApiResponse result) {
         try (Jedis jedis = jedisPool.getResource()) {
             // RedisDataDto에서 HashData 리스트를 순회하며 Hash에 데이터 추가
             for (RedisDataDto.HashData hashData : dataDto.getHashValues()) {
@@ -374,7 +374,7 @@ public class JedisPoolController {
         }
     }
 
-    void initList(RedisDataDto dataDto, ResponseDto result) {
+    void initList(RedisDataDto dataDto, ApiResponse result) {
         // Jedis 객체를 사용하여 Redis 연결
         try (Jedis jedis = jedisPool.getResource()) {
             String key = "data:list:1";  // 기존 리스트 키

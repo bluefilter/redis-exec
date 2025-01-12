@@ -1,20 +1,21 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.ResponseDto;
+import io.redispro.redisexec.dto.LoginRequest;
+import io.redispro.redisexec.dto.ApiResponse;
 import io.redispro.redisexec.service.AppUserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.concurrent.Callable;
 
-//@Tag(name = "Auth API", description = "사용자 인증 API")
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/auth", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -26,21 +27,30 @@ public class AuthController {
 
     @Operation(summary = "로그인 API", tags = {"Auth API"})
     @PostMapping("/login")
-    public Callable<?> login(@RequestParam String username, @RequestParam String password) {
-        ResponseDto result = new ResponseDto();
+    public Callable<?> login(@RequestBody final LoginRequest loginRequest) {
+        String userid = loginRequest.getUserid();
+        String password = loginRequest.getPassword();
 
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password));
+        ApiResponse apiResponse = new ApiResponse();
 
-            result.addData("jwt", appUserService.generateTokenForUser(authentication.getName()));
-        } catch (AuthenticationException e) {
-            //CustomAuthenticationEntryPoint 에서 처리되는지 확인하기 위해 일부러 주석 처리
-//            result.addData("error", e.getMessage());
-            throw e;
-        }
+        // 인증오류는 CustomAuthenticationEntryPoint 에서 처리된다.
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userid, password));
 
-        return () -> result;
+        // 인증된 사용자의 권한(roles)을 추출
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        // 예시: 첫 번째 권한(role)을 출력
+        String role = authorities.stream()
+                .map(GrantedAuthority::getAuthority)  // 권한을 문자열로 변환
+                .findFirst()
+                .orElse("ROLE_USER");  // 기본값 설정 (예: ROLE_USER)
+
+        return () -> apiResponse.setStatus("success", "Login successful")
+                .addData("userid", userid)
+                .addData("role", role.replace("ROLE_", ""))
+                .mergeResult(appUserService.generateAccessTokenForUser(userid))
+                .mergeResult(appUserService.generateRefreshTokenForUser(userid));
     }
 }
 

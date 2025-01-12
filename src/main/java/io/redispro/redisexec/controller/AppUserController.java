@@ -1,13 +1,10 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.ResponseDto;
+import io.redispro.redisexec.dto.ApiResponse;
 import io.redispro.redisexec.dto.AppUserDto;
 import io.redispro.redisexec.service.AppUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +26,7 @@ public class AppUserController {
     // 사용자등록
     @PostMapping("")
     public ResponseEntity<?> registerUser(@RequestBody AppUserDto appUserDto) {
-        ResponseDto result = new ResponseDto();
+        ApiResponse result = new ApiResponse();
 
         result.setMessage(appUserService.registerUser(appUserDto));
 
@@ -41,8 +38,8 @@ public class AppUserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         // 사용자 삭제 로직
-        ResponseDto result = new ResponseDto();
-        result.setData(appUserService.deleteUserById(id)); // 삭제된 결과 반환
+        ApiResponse result = new ApiResponse();
+        result.setResult(appUserService.deleteUserById(id)); // 삭제된 결과 반환
 
         // 삭제된 결과에 따라 HTTP 상태 코드 설정
         return ResponseEntity.ok(result); // 성공적으로 삭제된 경우 200 OK 반환
@@ -54,8 +51,8 @@ public class AppUserController {
             @Parameter(description = "ID of the user to be retrieved", required = true)
             @PathVariable Long id) {
         // 사용자 삭제 로직
-        ResponseDto result = new ResponseDto();
-        result.setData(appUserService.getUserById(id)); // 삭제된 결과 반환
+        ApiResponse result = new ApiResponse();
+        result.setResult(appUserService.getUserById(id)); // 삭제된 결과 반환
 
         // 삭제된 결과에 따라 HTTP 상태 코드 설정
         return ResponseEntity.ok(result); // 성공적으로 삭제된 경우 200 OK 반환
@@ -67,9 +64,9 @@ public class AppUserController {
     public Callable<?> getAllUsers(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size) {
         return () -> {
-            ResponseDto result = new ResponseDto();
+            ApiResponse result = new ApiResponse();
             Pageable pageable = PageRequest.of(page, size);
-            result.setData(appUserService.getAllUsers(pageable));
+            result.setResult(appUserService.getAllUsers(pageable));
             return result; // 페이지에 있는 사용자 정보 반환
         };
     }
