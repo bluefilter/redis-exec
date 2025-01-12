@@ -1,7 +1,6 @@
 package io.redispro.redisexec.config;
 
 import io.redispro.redisexec.filter.JwtAuthenticationFilter;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,10 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -47,30 +43,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
+        http.csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
                         // Swagger UI 관련 경로는 인증 없이 접근 가능
-                        .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html", "/favicon.ico").permitAll()
-                        .requestMatchers("/api/auth/login").permitAll() // /api/auth/login 경로는 인증 없이 접근 가능
+                        .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html", "/favicon.ico").permitAll().requestMatchers("/api/auth/login").permitAll() // /api/auth/login 경로는 인증 없이 접근 가능
                         .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN") // 사용자 등록
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")  // 사용자 삭제
                         .anyRequest().authenticated() // 그 외의 경로는 인증 필요
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터를 인증 필터 앞에 추가
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(authenticationEntryPoint) // 인증 실패 시 동작
+                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터를 인증 필터 앞에 추가
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(authenticationEntryPoint) // 인증 실패 시 동작
                         .accessDeniedHandler(accessDeniedHandler) // 권한 부족 시 동작
                 )
                 // 세션 관리 설정: Stateless 인증을 위한 설정
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 인증
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 인증
                 )
                 // CORS 설정을 활성화 (Spring Security 6의 새로운 방식)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정을 직접 적용
                 // 최신 방식으로 SecurityContext 설정
-                .securityContext(securityContext -> securityContext
-                        .securityContextRepository(new HttpSessionSecurityContextRepository()) // 최신 방식으로 수정
+                .securityContext(securityContext -> securityContext.securityContextRepository(new HttpSessionSecurityContextRepository()) // 최신 방식으로 수정
                 );
 
         /*
@@ -80,12 +70,7 @@ public class SecurityConfig {
         Spring Security 6 버전 부터 SecurityContext를 관리하는 기본 방식인 SecurityContextHolderFilter 를 사용하게 되었다.
         SecurityContextHolderFilter 는 이전 버전과는 다르게 SecurityContextRepository 의 구현체를 등록해주지 않으면 인증 객체를 저장할 수 없다는 점이 문제였다.
          */
-        http.securityContext((securityContext) -> securityContext
-                .securityContextRepository(new DelegatingSecurityContextRepository(
-                        new RequestAttributeSecurityContextRepository(),
-                        new HttpSessionSecurityContextRepository()
-                ))
-        );
+        http.securityContext((securityContext) -> securityContext.securityContextRepository(new DelegatingSecurityContextRepository(new RequestAttributeSecurityContextRepository(), new HttpSessionSecurityContextRepository())));
 
         return http.build();
     }
