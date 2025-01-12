@@ -21,6 +21,9 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,16 +32,6 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    /*
-    Spring Security는 기본적으로 SecurityContextHolder의 전략으로 MODE_INHERITABLETHREADLOCAL을 사용합니다. 이 전략은 부모 스레드에서 설정된 SecurityContext를 자식 스레드로 상속할 수 있게 해줍니다.
-    만약 스레드 간 인증 정보 전파를 원하지 않는다면, 다른 전략인 MODE_THREADLOCAL을 명시적으로 설정해야 합니다.
-     */
-//    @PostConstruct
-//    public void setup() {
-//        // SecurityContextHolder의 전략을 InheritableThreadLocal로 설정
-//        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -72,6 +65,12 @@ public class SecurityConfig {
                 // 세션 관리 설정: Stateless 인증을 위한 설정
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 인증
+                )
+                // CORS 설정을 활성화 (Spring Security 6의 새로운 방식)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정을 직접 적용
+                // 최신 방식으로 SecurityContext 설정
+                .securityContext(securityContext -> securityContext
+                        .securityContextRepository(new HttpSessionSecurityContextRepository()) // 최신 방식으로 수정
                 );
 
         /*
@@ -91,5 +90,18 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+    // CORS 설정 추가
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOrigin("http://localhost:3000");  // React 앱에서 요청을 허용할 출처
+        configuration.addAllowedHeader("*");  // 모든 헤더 허용
+        configuration.addAllowedMethod("*");  // 모든 HTTP 메서드 허용
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);  // 모든 경로에 대해 CORS 설정
+        return source;
+    }
 
 }
