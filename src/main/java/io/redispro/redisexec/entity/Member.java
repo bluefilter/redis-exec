@@ -1,14 +1,15 @@
 package io.redispro.redisexec.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 public class Member {
     @Id
@@ -19,7 +20,8 @@ public class Member {
 
     private String email;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @JsonManagedReference  // Member -> CostcoOrders 관계에서 비용 주문 목록 직렬화
+    private List<CostcoOrders> costcoOrders = new ArrayList<>();
 }
 

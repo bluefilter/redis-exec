@@ -60,7 +60,7 @@ public class AppUserController {
 
     @Operation(summary = "전체 사용자 조회 API", tags = {"User API"})
     // 전체 사용자 정보 페이지 단위 조회 (Callable로 비동기 처리)
-    @GetMapping("/all")
+    @GetMapping("")
     public Callable<?> getAllUsers(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size) {
         return () -> {
