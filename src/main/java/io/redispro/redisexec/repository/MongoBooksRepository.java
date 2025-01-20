@@ -1,6 +1,6 @@
 package io.redispro.redisexec.repository;
 
-import io.redispro.redisexec.dto.Book;
+import io.redispro.redisexec.entity.Book;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

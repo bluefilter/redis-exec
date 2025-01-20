@@ -1,7 +1,7 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.Book;
-import io.redispro.redisexec.dto.ApiResponse;
+import io.redispro.redisexec.entity.Book;
+import io.redispro.redisexec.dto.ApiResponseDTO;
 import io.redispro.redisexec.service.MongoBooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -32,7 +32,7 @@ public class MongoBooksController {
 
         List<Book> books = new ArrayList<>();
 
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
 
         if ("*".equals(pattern)) {
             // 모든 문서를 조회, 페이지 크기 10
@@ -60,7 +60,7 @@ public class MongoBooksController {
     // 비동기식 처리 -> Callable
     @PostMapping("/books")
     public Callable<?> saveBook(@RequestBody Book book) {
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
 
         booksService.saveBook(book);
 
@@ -77,7 +77,7 @@ public class MongoBooksController {
      */
     @PutMapping("/books/{id}")
     public Callable<?> updateBook(@PathVariable ObjectId id, @RequestBody Book updatedBook) {
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
         long count;
 
         if (updatedBook != null) {
@@ -136,7 +136,7 @@ public class MongoBooksController {
     public ResponseEntity<?> deleteBook(@PathVariable ObjectId id) {
         long count = booksService.deleteByIdWithCount(id);
 
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
         result.addData("count", count);
         // 삼항 연산자 수정
         if (count == 1) {

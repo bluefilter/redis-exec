@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class ApiResponse {
+public class ApiResponseDTO {
     // Getter, Setter
     private HttpStatus httpStatus;  // HTTP 상태 코드
     private String status;  // 성공 / 실패 상태
@@ -18,14 +18,14 @@ public class ApiResponse {
     private Map<String, Object> result;    // 실제 데이터 (데이터 타입에 따라 다르게 할당)
 
     // 기본 생성자
-    public ApiResponse() {
+    public ApiResponseDTO() {
 
         this.httpStatus = HttpStatus.OK;  // 기본값을 200 (OK)으로 설정
         this.result = new LinkedHashMap<>(); // 기본 생성자에서 Map 초기화
     }
 
     // 상태와 데이터를 설정할 수 있는 생성자
-    public ApiResponse(String status, String message, Map<String, Object> data) {
+    public ApiResponseDTO(String status, String message, Map<String, Object> data) {
         this.httpStatus = HttpStatus.OK;  // 기본값을 200 (OK)으로 설정
         this.status = status;
         this.message = message != null ? message : getDefaultMessage(status); // 상태에 따른 기본 메시지 설정
@@ -33,20 +33,20 @@ public class ApiResponse {
     }
 
     // 데이터를 추가하는 유틸리티 메서드
-    public ApiResponse addData(String key, Object value) {
+    public ApiResponseDTO addData(String key, Object value) {
         this.result.put(key, value);
         return this; // 메서드 체이닝을 위해 return this 추가
     }
 
     // 상태를 설정하는 메서드 (메서드 체이닝을 위해 return this 추가)
-    public ApiResponse setStatus(String status, String message) {
+    public ApiResponseDTO setStatus(String status, String message) {
         this.status = status;
         this.message = message != null ? message : getDefaultMessage(status);
         return this;
     }
 
     // result를 병합하는 메서드 (메서드 체이닝을 위해 return this 추가)
-    public ApiResponse mergeResult(Map<String, Object> newResult) {
+    public ApiResponseDTO mergeResult(Map<String, Object> newResult) {
         if (newResult != null && !newResult.isEmpty()) {
             this.result.putAll(newResult); // 기존 result에 새로운 데이터를 병합
         }

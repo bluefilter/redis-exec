@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-public class RedisDataDto {
+public class RedisDataDTO {
 
     private String dataType;       // 데이터 타입 (string, list, set, zset, hash, stream 등)
 
@@ -33,7 +33,7 @@ public class RedisDataDto {
     // 기본 생성자 (자동 생성)
 
     // 필요한 값을 사용하여 객체를 초기화할 수 있는 생성자
-    public RedisDataDto(String key, String value, String dataType, String streamField, Double latitude, Double longitude, List<GeoData> geoData) {
+    public RedisDataDTO(String key, String value, String dataType, String streamField, Double latitude, Double longitude, List<GeoData> geoData) {
         this.key = key;
         this.value = value;
         this.dataType = dataType;

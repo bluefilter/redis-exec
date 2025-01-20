@@ -1,7 +1,7 @@
 package io.redispro.redisexec.service;
 
 
-import io.redispro.redisexec.dto.Employee;
+import io.redispro.redisexec.entity.Employee;
 import io.redispro.redisexec.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 

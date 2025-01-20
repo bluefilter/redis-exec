@@ -1,7 +1,7 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.LoginRequest;
-import io.redispro.redisexec.dto.ApiResponse;
+import io.redispro.redisexec.dto.LoginRequestDTO;
+import io.redispro.redisexec.dto.ApiResponseDTO;
 import io.redispro.redisexec.service.AppUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ public class AuthController {
 
     @Operation(summary = "로그인 API", tags = {"Auth API"})
     @PostMapping("/login")
-    public Callable<?> login(@RequestBody final LoginRequest loginRequest) {
+    public Callable<?> login(@RequestBody final LoginRequestDTO loginRequest) {
         String userid = loginRequest.getUserid();
         String password = loginRequest.getPassword();
 
-        ApiResponse apiResponse = new ApiResponse();
+        ApiResponseDTO apiResponse = new ApiResponseDTO();
 
         // 인증오류는 CustomAuthenticationEntryPoint 에서 처리된다.
         Authentication authentication = authenticationManager.authenticate(

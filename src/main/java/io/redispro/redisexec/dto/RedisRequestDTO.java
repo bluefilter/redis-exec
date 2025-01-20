@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RedisRequestDto {
+public class RedisRequestDTO {
     private String dataType;
     private String key;
     private List<Long> bitIndexs; // 추가적인 파라미터

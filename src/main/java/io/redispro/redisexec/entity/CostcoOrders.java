@@ -21,16 +21,14 @@ public class CostcoOrders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    @JsonBackReference  // CostcoOrders -> Member 관계에서 member 직렬화 방지
-    private Member member;
-
     private LocalDateTime orderDate;
 
     private BigDecimal totalAmount;
 
-//    @OneToMany(mappedBy = "costcoOrders")
-//    @JsonManagedReference  // CostcoOrders -> OrderProduct 관계에서 제품 목록 직렬화
-//    private List<OrderProduct> orderProducts = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy = "costcoOrders")
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 }

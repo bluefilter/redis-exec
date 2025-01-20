@@ -1,6 +1,6 @@
 package io.redispro.redisexec.config;
 
-import io.redispro.redisexec.dto.RedisQryDto;
+import io.redispro.redisexec.dto.RedisQryDTO;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -15,7 +15,7 @@ public class RedisQryDtoArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(RedisQryDto.class);
+        return parameter.getParameterType().equals(RedisQryDTO.class);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class RedisQryDtoArgumentResolver implements HandlerMethodArgumentResolve
         String key = webRequest.getHeader("key");
         String value = webRequest.getHeader("value");
 
-        return RedisQryDto.of(dateType, key, value);
+        return RedisQryDTO.of(dateType, key, value);
     }
 }

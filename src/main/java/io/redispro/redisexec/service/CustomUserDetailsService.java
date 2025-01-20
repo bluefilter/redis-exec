@@ -1,6 +1,6 @@
 package io.redispro.redisexec.service;
 
-import io.redispro.redisexec.dto.AppUser;
+import io.redispro.redisexec.entity.AppUser;
 import io.redispro.redisexec.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

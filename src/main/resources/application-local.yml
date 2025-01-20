@@ -37,7 +37,7 @@ logging:
   level:
     org:
       hibernate: debug
-      springframework: debug
+      springframework: info
 #        security: debug
 
 

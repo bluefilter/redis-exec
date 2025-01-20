@@ -1,7 +1,7 @@
 package io.redispro.redisexec.service;
 
-import io.redispro.redisexec.dto.AppUser;
-import io.redispro.redisexec.dto.AppUserDto;
+import io.redispro.redisexec.entity.AppUser;
+import io.redispro.redisexec.dto.AppUserDTO;
 import io.redispro.redisexec.repository.AppUserRepository;
 import io.redispro.redisexec.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AppUserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public String registerUser(AppUserDto appUserDto) {
+    public String registerUser(AppUserDTO appUserDto) {
         // 사용자 이름 중복 체크
         if (appUserRepository.existsByUserid(appUserDto.getUserid())) {
             throw new IllegalArgumentException("이미 존재하는 사용자 이름입니다.");
@@ -117,7 +117,7 @@ public class AppUserService {
 
     @Transactional
     // 사용자 갱신 메서드
-    public Map<String, Object> updateUser(Long id, AppUserDto appUserDto) {
+    public Map<String, Object> updateUser(Long id, AppUserDTO appUserDto) {
         Map<String, Object> result = new HashMap<>();
 
         // 사용자 ID로 조회

@@ -1,4 +1,4 @@
-package io.redispro.redisexec.dto;
+package io.redispro.redisexec.common;
 
 import lombok.Getter;
 

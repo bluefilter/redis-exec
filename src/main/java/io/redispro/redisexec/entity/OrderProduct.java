@@ -1,6 +1,5 @@
 package io.redispro.redisexec.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -16,13 +15,13 @@ public class OrderProduct {
     @EmbeddedId
     private OrderProductId id;
 
-//    @ManyToOne
-//    @MapsId("orderId")
-//    private CostcoOrders costcoOrders;
-
-//    @ManyToOne
-//    @MapsId("productId")
-//    private Product product;
-
     private int quantity;
+
+    @ManyToOne
+    @MapsId("orderId")
+    private CostcoOrders costcoOrders;
+
+    @ManyToOne
+    @MapsId("productId")
+    private Product product;
 }

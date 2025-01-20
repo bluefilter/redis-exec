@@ -20,8 +20,9 @@ public class Member {
 
     private String email;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    @JsonManagedReference  // Member -> CostcoOrders 관계에서 비용 주문 목록 직렬화
+    // fetch = FetchType.LAZY (default)
+    // cascade의 기본값은 **CascadeType.NONE**입니다.
+    @OneToMany(mappedBy = "member")
     private List<CostcoOrders> costcoOrders = new ArrayList<>();
 }
 

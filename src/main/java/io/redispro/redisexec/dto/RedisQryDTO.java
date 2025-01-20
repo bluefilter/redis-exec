@@ -5,18 +5,18 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RedisQryDto {
+public class RedisQryDTO {
     private final String dateType;
     private final String key;
     private final Object value;
 
-    private RedisQryDto(String dateType, String key, Object value) {
+    private RedisQryDTO(String dateType, String key, Object value) {
         this.dateType = dateType;
         this.key = key;
         this.value = value;
     }
 
-    public static RedisQryDto of(String dateType, String key, Object value) {
-        return new RedisQryDto(dateType, key, value);
+    public static RedisQryDTO of(String dateType, String key, Object value) {
+        return new RedisQryDTO(dateType, key, value);
     }
 }

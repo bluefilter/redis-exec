@@ -1,9 +1,9 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.RedisDataDto;
-import io.redispro.redisexec.dto.RedisDataType;
-import io.redispro.redisexec.dto.RedisRequestDto;
-import io.redispro.redisexec.dto.ApiResponse;
+import io.redispro.redisexec.dto.RedisDataDTO;
+import io.redispro.redisexec.common.RedisDataType;
+import io.redispro.redisexec.dto.RedisRequestDTO;
+import io.redispro.redisexec.dto.ApiResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +27,9 @@ public class JedisPoolController {
     private final JedisPool jedisPool;
 
     @GetMapping("/get-value")
-    public Callable<?> getRedisValue(@ModelAttribute RedisRequestDto rDto) {
+    public Callable<?> getRedisValue(@ModelAttribute RedisRequestDTO rDto) {
         // 응답 결과 객체
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
 
         // Jedis 객체를 풀에서 빌려오기
         try (Jedis jedis = jedisPool.getResource()) {
@@ -114,9 +114,9 @@ public class JedisPoolController {
     }
 
     @PostMapping("/set-value")
-    public Callable<?> setRedisValue(@RequestBody RedisDataDto dataDto) {
+    public Callable<?> setRedisValue(@RequestBody RedisDataDTO dataDto) {
         // 응답 결과 객체
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
 
         // Jedis 객체를 풀에서 빌려오기
         try (Jedis jedis = jedisPool.getResource()) {
@@ -156,7 +156,7 @@ public class JedisPoolController {
                     break;
                 case STREAM:
                     if (dataDto.getStreamValues() != null && !dataDto.getStreamValues().isEmpty()) {
-                        for (RedisDataDto.StreamSampleData streamData : dataDto.getStreamValues()) {
+                        for (RedisDataDTO.StreamSampleData streamData : dataDto.getStreamValues()) {
                             // StreamSampleData 객체를 Map<String, String>으로 변환
                             Map<String, String> fields = streamData.getFields();
 
@@ -180,7 +180,7 @@ public class JedisPoolController {
                      * 데이터를 비트 단위로 저장하므로 직관적이지 않으며, 비트를 인덱싱할 매핑 로직이 필요합니다.
                      */
                     if (dataDto.getBitmapValues() != null && !dataDto.getBitmapValues().isEmpty()) {
-                        for (RedisDataDto.BitmapData b : dataDto.getBitmapValues()) {
+                        for (RedisDataDTO.BitmapData b : dataDto.getBitmapValues()) {
                             jedis.setbit(key, b.getIndex(), b.isValue()); // ID 1001 출석
                         }
                     } else {
@@ -203,7 +203,7 @@ public class JedisPoolController {
                     // GEO 데이터 타입 처리
                     if (dataDto.getGeoValues() != null && !dataDto.getGeoValues().isEmpty()) {
                         // GeoData 리스트를 순회하면서 GEO 데이터 추가
-                        for (RedisDataDto.GeoData geoData : dataDto.getGeoValues()) {
+                        for (RedisDataDTO.GeoData geoData : dataDto.getGeoValues()) {
                             if (geoData.getLatitude() != null && geoData.getLongitude() != null) {
                                 jedis.geoadd(key, geoData.getLongitude(), geoData.getLatitude(), geoData.getValue()); // GEO 데이터 추가
                                 result.addData("value", geoData.getValue());
@@ -236,7 +236,7 @@ public class JedisPoolController {
 
     @DeleteMapping("/delete-keys")
     public Callable<?> deleteRedisKeys(@RequestParam List<String> keys) {
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
 
         try (Jedis jedis = jedisPool.getResource()) {
             List<String> nonExistentKeys = new ArrayList<>();
@@ -314,7 +314,7 @@ public class JedisPoolController {
         }
     }
 
-    void addString(RedisDataDto dataDto, ApiResponse result) {
+    void addString(RedisDataDTO dataDto, ApiResponseDTO result) {
         try (Jedis jedis = jedisPool.getResource()) {
             String key = dataDto.getKey();
             String value = dataDto.getValue(); // Redis에 설정할 값
@@ -333,7 +333,7 @@ public class JedisPoolController {
         리스트의 각 요소는 입력된 순서대로 정렬됩니다(삽입 순서를 유지).
         리스트는 최대 약 2^32 - 1 (약 40억 개)의 항목을 저장할 수 있습니다.
     */
-    void addList(RedisDataDto dataDto, ApiResponse result) {
+    void addList(RedisDataDTO dataDto, ApiResponseDTO result) {
         try (Jedis jedis = jedisPool.getResource()) {
             String key = dataDto.getKey();
 
@@ -348,7 +348,7 @@ public class JedisPoolController {
         }
     }
 
-    void addSet(RedisDataDto dataDto, ApiResponse result) {
+    void addSet(RedisDataDTO dataDto, ApiResponseDTO result) {
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.sadd(dataDto.getKey(), dataDto.getValues().toArray(new String[0]));
 
@@ -357,24 +357,24 @@ public class JedisPoolController {
         }
     }
 
-    void addZSet(RedisDataDto dataDto, ApiResponse result) {
+    void addZSet(RedisDataDTO dataDto, ApiResponseDTO result) {
         try (Jedis jedis = jedisPool.getResource()) {
-            for (RedisDataDto.ZSetData ss : dataDto.getZsetValues()) {
+            for (RedisDataDTO.ZSetData ss : dataDto.getZsetValues()) {
                 jedis.zadd(dataDto.getKey(), ss.getScore(), ss.getValue()); // ZSet에 점수와 함께 값 추가
             }
         }
     }
 
-    void addHash(RedisDataDto dataDto, ApiResponse result) {
+    void addHash(RedisDataDTO dataDto, ApiResponseDTO result) {
         try (Jedis jedis = jedisPool.getResource()) {
             // RedisDataDto에서 HashData 리스트를 순회하며 Hash에 데이터 추가
-            for (RedisDataDto.HashData hashData : dataDto.getHashValues()) {
+            for (RedisDataDTO.HashData hashData : dataDto.getHashValues()) {
                 jedis.hset(dataDto.getKey(), hashData.getField(), hashData.getValue()); // Hash에 필드와 값 추가
             }
         }
     }
 
-    void initList(RedisDataDto dataDto, ApiResponse result) {
+    void initList(RedisDataDTO dataDto, ApiResponseDTO result) {
         // Jedis 객체를 사용하여 Redis 연결
         try (Jedis jedis = jedisPool.getResource()) {
             String key = "data:list:1";  // 기존 리스트 키

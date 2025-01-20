@@ -1,6 +1,6 @@
 package io.redispro.redisexec.repository;
 
-import io.redispro.redisexec.dto.AppUser;
+import io.redispro.redisexec.entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

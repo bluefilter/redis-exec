@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.event.AfterLoadEvent;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import io.redispro.redisexec.dto.Book;
+import io.redispro.redisexec.entity.Book;
 import org.bson.Document;
 
 

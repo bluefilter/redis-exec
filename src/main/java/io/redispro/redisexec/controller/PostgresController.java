@@ -1,6 +1,6 @@
 package io.redispro.redisexec.controller;
 
-import io.redispro.redisexec.dto.Employee;
+import io.redispro.redisexec.entity.Employee;
 import io.redispro.redisexec.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

@@ -1,7 +1,7 @@
 package io.redispro.redisexec.controller;
 
 import io.redispro.redisexec.config.EndpointRegistry;
-import io.redispro.redisexec.dto.ApiResponse;
+import io.redispro.redisexec.dto.ApiResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ public class EndpointController {
 
     @GetMapping("/endpoints")
     public Callable<?> getRegisteredEndpoints() {
-        ApiResponse result = new ApiResponse();
+        ApiResponseDTO result = new ApiResponseDTO();
         result.addData("endpoints", endpointRegistry.getEndpoints());
         return () -> result;
     }
