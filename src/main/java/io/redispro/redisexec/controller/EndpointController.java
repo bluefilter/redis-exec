@@ -17,11 +17,6 @@ public class EndpointController {
 
     private final EndpointRegistry endpointRegistry;
 
-//    @Autowired
-//    public EndpointController(EndpointRegistry endpointRegistry) {
-//        this.endpointRegistry = endpointRegistry;
-//    }
-
     @GetMapping("/endpoints")
     public Callable<?> getRegisteredEndpoints() {
         ApiResponseDTO result = new ApiResponseDTO();
