@@ -1,46 +1,43 @@
-package io.redispro.redisexec.service;
+package io.redispro.redisexec.service.costco;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.*;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.redispro.redisexec.dto.CostcoOrderDTO;
-import io.redispro.redisexec.dto.MemberDTO;
-import io.redispro.redisexec.dto.MemberUpdateRequest;
-import io.redispro.redisexec.entity.Member;
-import io.redispro.redisexec.entity.QCostcoOrders;
-import io.redispro.redisexec.entity.QMember;
-import io.redispro.redisexec.repository.MemberRepository;
+import io.redispro.redisexec.dto.CostcoMemberDTO;
+import io.redispro.redisexec.dto.CostcoMemberUpdateRequest;
+import io.redispro.redisexec.entity.costco.CostcoMember;
+import io.redispro.redisexec.entity.costco.QCostcoMember;
+import io.redispro.redisexec.repository.costco.CostcoMemberRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class MemberService {
+public class CostcoMemberService {
+
+    /*
 //    @PersistenceContext
 //    private EntityManager entityManager;  // EntityManager 주입 (jakarta.persistence 사용)
-
 //    private final QCostcoOrders qCostcoOrders = QCostcoOrders.costcoOrders;
+     */
 
-    private final MemberRepository memberRepository;
+    private final CostcoMemberRepository costcoMemberRepository;
     private final JPAQueryFactory queryFactory;
-    private final QMember qMember = QMember.member;
+    private final QCostcoMember qCostcoMember = QCostcoMember.costcoMember;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, EntityManager entityManager) {
-        this.memberRepository = memberRepository;
+    public CostcoMemberService(CostcoMemberRepository costcoMemberRepository, EntityManager entityManager) {
+        this.costcoMemberRepository = costcoMemberRepository;
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
@@ -51,22 +48,22 @@ public class MemberService {
      * @return 등록된 멤버 DTO
      */
     @Transactional
-    public Map<String, Object> createMember(MemberUpdateRequest memberCreateRequest) {
+    public Map<String, Object> createMember(CostcoMemberUpdateRequest memberCreateRequest) {
         // 생성자를 사용하여 Member 엔티티 생성
-        Member member = new Member(memberCreateRequest.getName(), memberCreateRequest.getEmail());
+        CostcoMember member = new CostcoMember(memberCreateRequest.getName(), memberCreateRequest.getEmail());
 
         // Member를 데이터베이스에 저장
-        Member savedMember = memberRepository.save(member);
+        CostcoMember savedMember = costcoMemberRepository.save(member);
 
         // DTO 변환 후 결과 객체에 바로 저장
         return Collections.singletonMap("members", Collections.singletonList(convertToDTO(savedMember, false)));
     }
 
     @Transactional
-    public Map<String, Object> getMemberById(Long memberId, boolean includeOrders) {
+    public Map<String, Object> getMemberById(UUID costcoMemberId, boolean includeOrders) {
         // id로 조회하는 쿼리 생성
-        Member member = queryFactory.selectFrom(qMember)
-                .where(qMember.id.eq(memberId))
+        CostcoMember member = queryFactory.selectFrom(qCostcoMember)
+                .where(qCostcoMember.id.eq(costcoMemberId))
                 .fetchOne();  // id로 한 명의 회원만 조회
 
         // 회원이 존재하면 DTO로 변환하고, 존재하지 않으면 빈 리스트 반환
@@ -80,24 +77,24 @@ public class MemberService {
         Map<String, Object> result = new HashMap<>();
 
         // 쿼리 생성 및 페이지 처리
-        List<Member> members = queryFactory.selectFrom(qMember)
+        List<CostcoMember> members = queryFactory.selectFrom(qCostcoMember)
                 .orderBy(createOrderSpecifier(pageable))  // 정렬 처리 (배열로 변환)/ 정렬 처리
                 .offset((long) pageable.getPageNumber() * pageable.getPageSize())  // 페이지 번호에 따른 offset 처리
                 .limit(pageable.getPageSize())  // 페이지 크기만큼 데이터 조회
                 .fetch();  // 결과 조회
 
         // DTO로 변환
-        List<MemberDTO> memberDTOs = members.stream()
+        List<CostcoMemberDTO> costcoMemberDTOS = members.stream()
                 .map(member -> convertToDTO(member, includeOrders))
                 .collect(Collectors.toList());
 
         // 총 항목 수를 구하기 위한 효율적인 방법 (fetchCount() 사용)
         Long totalCount = queryFactory.select(Wildcard.count)
-                .from(qMember)
+                .from(qCostcoMember)
                 .fetchOne();
         totalCount = totalCount == null ? 0 : totalCount;
         // 페이지 결과 생성
-        Page<MemberDTO> page = new PageImpl<>(memberDTOs, pageable, totalCount);
+        Page<CostcoMemberDTO> page = new PageImpl<>(costcoMemberDTOS, pageable, totalCount);
 
         result.put("members", page.getContent());
         result.put("totalPages", page.getTotalPages());  // 총 페이지 수
@@ -107,16 +104,16 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean updateMember(MemberUpdateRequest memberUpdateRequest) {
+    public boolean updateMember(CostcoMemberUpdateRequest costcoMemberUpdateRequest) {
         // 멤버 조회
-        Member member = queryFactory.selectFrom(qMember)
-                .where(qMember.id.eq(memberUpdateRequest.getId()))
+        CostcoMember member = queryFactory.selectFrom(qCostcoMember)
+                .where(qCostcoMember.id.eq(costcoMemberUpdateRequest.getId()))
                 .fetchOne();
 
         if (member != null) {
             // 멤버 정보를 업데이트
-            member.setName(memberUpdateRequest.getName());
-            member.setEmail(memberUpdateRequest.getEmail());
+            member.setName(costcoMemberUpdateRequest.getName());
+            member.setEmail(costcoMemberUpdateRequest.getEmail());
 
             // 트랜잭션이 끝날 때 자동으로 flush()가 호출되어
             // 엔티티 상태가 DB에 반영됩니다. 따라서 명시적으로 flush()를 호출할 필요가 없습니다.
@@ -136,16 +133,16 @@ public class MemberService {
 
 
     @Transactional
-    public boolean deleteMember(Long memberId) {
+    public boolean deleteMember(UUID costcoMemberId) {
         // 멤버 조회
-        Member member = queryFactory.selectFrom(qMember)
-                .where(qMember.id.eq(memberId))
+        CostcoMember member = queryFactory.selectFrom(qCostcoMember)
+                .where(qCostcoMember.id.eq(costcoMemberId))
                 .fetchOne();
 
         if (member != null) {
             // 멤버 삭제
-            queryFactory.delete(qMember)
-                    .where(qMember.id.eq(memberId))
+            queryFactory.delete(qCostcoMember)
+                    .where(qCostcoMember.id.eq(costcoMemberId))
                     .execute();
             return true;  // 삭제 성공
         } else {
@@ -153,35 +150,35 @@ public class MemberService {
         }
     }
 
-    private MemberDTO convertToDTO(Member member, boolean includeOrders) {
+    private CostcoMemberDTO convertToDTO(CostcoMember costcoMember, boolean includeOrders) {
         // 기본적으로 Member 정보만 포함
         List<CostcoOrderDTO> costcoOrders = null;
 
         // includeOrders가 true일 때만 CostcoOrders를 포함
-        if (includeOrders && member.getCostcoOrders() != null) {
-            costcoOrders = member.getCostcoOrders().stream()
+        if (includeOrders && costcoMember.getOrders() != null) {
+            costcoOrders = costcoMember.getOrders().stream()
                     .map(order -> new CostcoOrderDTO(order.getId(), order.getOrderDate(), order.getTotalAmount())) // CostcoOrders를 DTO로 변환
                     .collect(Collectors.toList());
         }
 
-        return new MemberDTO(member.getId(), member.getName(), member.getEmail(), costcoOrders);
+        return new CostcoMemberDTO(costcoMember.getId(), costcoMember.getName(), costcoMember.getEmail(), costcoOrders);
     }
-
 
     private OrderSpecifier<?>[] createOrderSpecifier(Pageable pageable) {
         List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
 
         // pageable로부터 제공된 정렬 정보 기반으로 OrderSpecifier 생성
         for (Sort.Order order : pageable.getSort()) {
-            // PathBuilder로 Member의 필드를 동적으로 참조
-            PathBuilder<Member> pathBuilder = new PathBuilder<>(Member.class, "member1");
+            // PathBuilder로 CostcoMember의 필드를 동적으로 참조
+            PathBuilder<CostcoMember> pathBuilder = new PathBuilder<>(CostcoMember.class, "costcoMember");
 
             // 정렬할 필드에 대한 Path 객체 생성
             ComparableExpressionBase<?> memberField = switch (order.getProperty()) {
                 case "name" -> pathBuilder.getString("name");  // name 필드로 정렬
                 case "email" -> pathBuilder.getString("email");  // email 필드로 정렬
+                case "id" -> pathBuilder.getComparable("id", UUID.class);  // id 필드로 정렬 (UUID 타입)
                 // 다른 필드들도 추가 가능
-                default -> pathBuilder.getString("id");  // 기본 정렬 필드
+                default -> pathBuilder.getComparable("id", UUID.class);  // 기본 정렬 필드
             };
 
             // OrderSpecifier 추가 (ASC/DESC에 맞춰 정렬)

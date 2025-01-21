@@ -1,9 +1,8 @@
-package io.redispro.redisexec.controller;
+package io.redispro.redisexec.controller.costco;
 
 import io.redispro.redisexec.dto.ApiResponseDTO;
-import io.redispro.redisexec.dto.MemberDTO;
-import io.redispro.redisexec.dto.MemberUpdateRequest;
-import io.redispro.redisexec.service.MemberService;
+import io.redispro.redisexec.dto.CostcoMemberUpdateRequest;
+import io.redispro.redisexec.service.costco.CostcoMemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -12,14 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
 import java.util.concurrent.Callable;
 
 @RestController
 @RequestMapping(value = "/api/members", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
-public class MemberController {
+public class CostcoMemberController {
 
-    private final MemberService memberService;
+    private final CostcoMemberService costcoMemberService;
 
     /**
      * 멤버를 등록하는 API
@@ -27,15 +27,15 @@ public class MemberController {
      * @param memberCreateRequest 생성할 멤버의 정보 (RequestBody로 받음)
      * @return 등록된 멤버의 DTO
      */
-    @Operation(summary = "멤버 등록 API", tags = {"Member API"})
+    @Operation(summary = "멤버 등록 API", tags = {"CostcoMember API"})
     @PostMapping
     public Callable<?> createMember(
-            @RequestBody MemberUpdateRequest memberCreateRequest) {
+            @RequestBody CostcoMemberUpdateRequest memberCreateRequest) {
         return () -> {
             ApiResponseDTO response = new ApiResponseDTO();
 
             // 응답 객체에 등록된 멤버 정보 설정
-            response.setResult(memberService.createMember(memberCreateRequest));
+            response.setResult(costcoMemberService.createMember(memberCreateRequest));
 
             return response;
         };
@@ -46,7 +46,7 @@ public class MemberController {
      *
      * @return 모든 Member 목록
      */
-    @Operation(summary = "멤버 조회 API", tags = {"Member API"})
+    @Operation(summary = "멤버 조회 API", tags = {"CostcoMember API"})
     @GetMapping
     public Callable<?> getAllMembers(
             @RequestParam(value = "includeOrders", defaultValue = "false") boolean includeOrders,
@@ -62,7 +62,7 @@ public class MemberController {
 
             // ApiResponseDTO 객체 생성 및 데이터 반환
             ApiResponseDTO result = new ApiResponseDTO();
-            result.setResult(memberService.getMembersWithOrders(includeOrders, pageable));
+            result.setResult(costcoMemberService.getMembersWithOrders(includeOrders, pageable));
 
             return result;
         };
@@ -87,21 +87,21 @@ public class MemberController {
     /**
      * id로 멤버 조회
      *
-     * @param memberId      멤버의 ID
+     * @param id      멤버의 ID
      * @param includeOrders 주문 정보를 포함할지 여부
      * @return 조회된 멤버 DTO
      */
-    @Operation(summary = "id로 멤버 조회 API", tags = {"Member API"})
-    @GetMapping("/{memberId}")
+    @Operation(summary = "id로 멤버 조회 API", tags = {"CostcoMember API"})
+    @GetMapping("/{id}")
     public Callable<?> getMemberById(
-            @PathVariable Long memberId,  // URL 경로에서 memberId를 받아옴
+            @PathVariable UUID id,  // URL 경로에서 memberId를 받아옴
             @RequestParam(value = "includeOrders", defaultValue = "false") boolean includeOrders) {
 
         return () -> {
             // 결과 객체 생성
             ApiResponseDTO result = new ApiResponseDTO();
 
-            result.setResult(memberService.getMemberById(memberId, includeOrders));  // 조회된 멤버 DTO를 반환
+            result.setResult(costcoMemberService.getMemberById(id, includeOrders));  // 조회된 멤버 DTO를 반환
 
             return result;
         }; // 성공적으로 조회된 경우 200 OK 반환
@@ -110,19 +110,19 @@ public class MemberController {
     /**
      * 멤버 정보 수정
      *
-     * @param memberId 수정할 멤버의 ID
+     * @param id 수정할 멤버의 ID
      * @return 수정된 멤버 DTO
      */
-    @Operation(summary = "멤버 정보 수정 API", tags = {"Member API"})
-    @PutMapping("/{memberId}")
+    @Operation(summary = "멤버 정보 수정 API", tags = {"CostcoMember API"})
+    @PutMapping("/{id}")
     public Callable<?> updateMember(
-            @PathVariable Long memberId,
-            @RequestBody MemberUpdateRequest updateRequest) {
+            @PathVariable UUID id,
+            @RequestBody CostcoMemberUpdateRequest updateRequest) {
 
         return () -> {
             ApiResponseDTO result = new ApiResponseDTO();
 
-            if (memberService.updateMember(updateRequest)) {
+            if (costcoMemberService.updateMember(updateRequest)) {
                 result.setMessage("Member updated successfully");  // 수정된 멤버 반환
             } else {
                 result.setMessage("Member not found or update failed");  // 멤버가 없거나 수정 실패
@@ -135,16 +135,16 @@ public class MemberController {
     /**
      * 멤버 삭제
      *
-     * @param memberId 삭제할 멤버의 ID
+     * @param id 삭제할 멤버의 ID
      * @return 삭제 성공 여부
      */
-    @Operation(summary = "멤버 삭제 API", tags = {"Member API"})
-    @DeleteMapping("/{memberId}")
-    public Callable<?> deleteMember(@PathVariable Long memberId) {
+    @Operation(summary = "멤버 삭제 API", tags = {"CostcoMember API"})
+    @DeleteMapping("/{id}")
+    public Callable<?> deleteMember(@PathVariable UUID id) {
 
         return () -> {
             ApiResponseDTO result = new ApiResponseDTO();
-            boolean isDeleted = memberService.deleteMember(memberId);
+            boolean isDeleted = costcoMemberService.deleteMember(id);
 
             if (isDeleted) {
                 result.setMessage("Member deleted successfully");  // 삭제 성공
