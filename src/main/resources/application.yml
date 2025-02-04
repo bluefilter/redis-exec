@@ -7,7 +7,7 @@ spring:
 #    enabled: false #Spring Boot에서 JMX를 사용하지 않는 경우
 
 server:
-  port: 8000
+  port: 8080
 
 springdoc:
   swagger-ui:

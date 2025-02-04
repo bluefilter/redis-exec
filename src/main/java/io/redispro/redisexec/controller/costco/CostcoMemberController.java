@@ -1,7 +1,7 @@
 package io.redispro.redisexec.controller.costco;
 
 import io.redispro.redisexec.dto.ApiResponseDTO;
-import io.redispro.redisexec.dto.CostcoMemberUpdateRequest;
+import io.redispro.redisexec.dto.CostcoMemberUpdateRequestDTO;
 import io.redispro.redisexec.service.costco.CostcoMemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class CostcoMemberController {
     @Operation(summary = "멤버 등록 API", tags = {"CostcoMember API"})
     @PostMapping
     public Callable<?> createMember(
-            @RequestBody CostcoMemberUpdateRequest memberCreateRequest) {
+            @RequestBody CostcoMemberUpdateRequestDTO memberCreateRequest) {
         return () -> {
             ApiResponseDTO response = new ApiResponseDTO();
 
@@ -117,7 +117,7 @@ public class CostcoMemberController {
     @PutMapping("/{id}")
     public Callable<?> updateMember(
             @PathVariable UUID id,
-            @RequestBody CostcoMemberUpdateRequest updateRequest) {
+            @RequestBody CostcoMemberUpdateRequestDTO updateRequest) {
 
         return () -> {
             ApiResponseDTO result = new ApiResponseDTO();

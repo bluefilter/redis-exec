@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CostcoMemberUpdateRequest {
+public class CostcoMemberUpdateRequestDTO {
     private UUID id;
     private String name;
     private String email;

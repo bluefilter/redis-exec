@@ -6,7 +6,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.redispro.redisexec.dto.CostcoOrderDTO;
 import io.redispro.redisexec.dto.CostcoMemberDTO;
-import io.redispro.redisexec.dto.CostcoMemberUpdateRequest;
+import io.redispro.redisexec.dto.CostcoMemberUpdateRequestDTO;
 import io.redispro.redisexec.entity.costco.CostcoMember;
 import io.redispro.redisexec.entity.costco.QCostcoMember;
 import io.redispro.redisexec.repository.costco.CostcoMemberRepository;
@@ -48,7 +48,7 @@ public class CostcoMemberService {
      * @return 등록된 멤버 DTO
      */
     @Transactional
-    public Map<String, Object> createMember(CostcoMemberUpdateRequest memberCreateRequest) {
+    public Map<String, Object> createMember(CostcoMemberUpdateRequestDTO memberCreateRequest) {
         // 생성자를 사용하여 Member 엔티티 생성
         CostcoMember member = new CostcoMember(memberCreateRequest.getName(), memberCreateRequest.getEmail());
 
@@ -104,16 +104,16 @@ public class CostcoMemberService {
     }
 
     @Transactional
-    public boolean updateMember(CostcoMemberUpdateRequest costcoMemberUpdateRequest) {
+    public boolean updateMember(CostcoMemberUpdateRequestDTO costcoMemberUpdateRequestDTO) {
         // 멤버 조회
         CostcoMember member = queryFactory.selectFrom(qCostcoMember)
-                .where(qCostcoMember.id.eq(costcoMemberUpdateRequest.getId()))
+                .where(qCostcoMember.id.eq(costcoMemberUpdateRequestDTO.getId()))
                 .fetchOne();
 
         if (member != null) {
             // 멤버 정보를 업데이트
-            member.setName(costcoMemberUpdateRequest.getName());
-            member.setEmail(costcoMemberUpdateRequest.getEmail());
+            member.setName(costcoMemberUpdateRequestDTO.getName());
+            member.setEmail(costcoMemberUpdateRequestDTO.getEmail());
 
             // 트랜잭션이 끝날 때 자동으로 flush()가 호출되어
             // 엔티티 상태가 DB에 반영됩니다. 따라서 명시적으로 flush()를 호출할 필요가 없습니다.

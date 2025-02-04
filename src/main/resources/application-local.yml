@@ -6,10 +6,6 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        #        transaction:
-        #          jta:
-        #            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
-        #        entitymanager_factory_interface: jakarta.persistence.EntityManagerFactory
         format_sql: true        # SQL을 포맷하여 보기 좋게 출력
         use_sql_comments: true  # SQL에 주석을 추가하여, 쿼리의 의미를 더 명확히 함
         generate_statistics: true
